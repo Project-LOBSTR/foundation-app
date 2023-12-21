@@ -1,10 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import Home from "@/app/page";
 
-it("should have Docs text", () => {
+it("The text Welcome to LOBSTR will display on the home page", () => {
   render(<Home />);
 
-  const docsText = screen.getByText("Docs");
-
-  expect(docsText).toBeInTheDocument();
+  expect(screen.getByText("Welcome to LOBSTR")).toBeInTheDocument();
 });
