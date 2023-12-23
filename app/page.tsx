@@ -1,4 +1,5 @@
 "use client";
+import Layout from "@/components/Layout";
 import NDK from "@nostr-dev-kit/ndk";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -30,27 +31,8 @@ export default function Home() {
     },
   ];
 
-  useEffect(() => {
-    const ndk = new NDK({
-      explicitRelayUrls: ["wss://relay.primal.net"],
-    });
-
-    ndk.connect(5000);
-    console.log("connected to the relay!");
-  }, []);
-
   return (
-    <main className="flex min-h-screen flex-col bg-white items-center gap-10 justify-center p-12">
-      <div className="items-center flex flex-col">
-        <Image
-          src={"/lobstr-logo.png"}
-          alt="Lobstrrr"
-          width={500}
-          height={500}
-          priority
-        />
-        <h1 className="text-primary font-heading text-xl">Welcome to LOBSTR</h1>
-      </div>
+    <Layout heading="Welcome to LOBSTR">
       <div className="flex flex-col gap-4">
         {buttons.map((button: Button) => {
           return (
@@ -66,6 +48,6 @@ export default function Home() {
           );
         })}
       </div>
-    </main>
+    </Layout>
   );
 }
