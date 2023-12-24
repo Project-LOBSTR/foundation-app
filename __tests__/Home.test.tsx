@@ -1,8 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import Home from "@/app/page";
+import { render, screen } from '@testing-library/react'
 
-it("The text Welcome to LOBSTR will display on the home page", () => {
-  render(<Home />);
+import Home from '@/app/page'
 
-  expect(screen.getByText("Welcome to LOBSTR")).toBeInTheDocument();
-});
+it('The text Welcome to LOBSTR will display on the home page', () => {
+  render(<Home />)
+
+  expect(screen.getByText('Welcome to LOBSTR')).toBeInTheDocument()
+})
