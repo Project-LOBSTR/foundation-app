@@ -1,3 +1,5 @@
+'use client'
+
 import Layout from '@/components/Layout'
 
 const Dashboard = () => {
