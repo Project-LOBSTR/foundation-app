@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
+import { npubEncode } from 'nostr-tools/nip19'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
@@ -27,7 +28,7 @@ const SignIn = () => {
     const user = await privKeySigner.user()
 
     if (user.pubkey) {
-      console.log(user)
+      console.log(npubEncode(user.pubkey))
       router.push('/dashboard')
     }
   }, [nsec, router])
@@ -64,6 +65,7 @@ const SignIn = () => {
               className="focus: border-2 border-detail px-2 text-black placeholder-detail outline-none"
               onChange={(e) => setNsec(e.target.value)}
               placeholder="Enter your nsec"
+              type="password"
             />
             <Button
               className="rounded-sm bg-secondary  text-sm text-white"
