@@ -1,5 +1,6 @@
-import Image from 'next/image'
 import { PropsWithChildren } from 'react'
+
+import Image from 'next/image'
 
 type Props = {
   heading?: string
@@ -17,7 +18,7 @@ const Layout = ({ heading, children }: PropsWithChildren<Props>) => {
           priority
         />
         {heading && (
-          <h1 className="text-primary-500 font-heading text-xl">{heading}</h1>
+          <h1 className="font-heading text-xl text-primary-500">{heading}</h1>
         )}
       </div>
       {children}
