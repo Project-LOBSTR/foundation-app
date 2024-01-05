@@ -1,8 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import { useRouter } from 'next/navigation'
 
 type ButtonProps = {
   id: string
