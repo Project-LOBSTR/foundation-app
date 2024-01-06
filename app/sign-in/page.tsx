@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react'
 import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
-import { npubEncode } from 'nostr-tools/nip19'
 import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
@@ -31,7 +30,7 @@ const SignIn = () => {
     const user = await privKeySigner.user()
 
     if (user.pubkey) {
-      dispatch(login(npubEncode(user.pubkey)))
+      dispatch(login(user.pubkey))
       router.push('/dashboard')
     }
   }, [dispatch, nsec, router])
@@ -42,7 +41,7 @@ const SignIn = () => {
     const user = await nip07signer.user()
 
     if (user.pubkey) {
-      dispatch(login(npubEncode(user.pubkey)))
+      dispatch(login(user.pubkey))
       router.push('/dashboard')
     }
   }, [dispatch, router])
@@ -50,14 +49,11 @@ const SignIn = () => {
   return (
     <Layout heading="Login to LOBSTR">
       <div className="item-center flex flex-col gap-2 align-middle">
-        <Button
-          className="rounded-sm bg-primary-600 px-12 py-4 text-sm text-white"
-          onClick={loginWithSigner}
-        >
+        <Button variant="primary" onClick={loginWithSigner}>
           Use NOSTR signer
         </Button>
         <Button
-          className="rounded-sm bg-primary-600 px-12 py-4 text-sm text-white"
+          variant="primary"
           onClick={() => setShowNsecEntry((prev: boolean) => !prev)}
         >
           Use with nsec

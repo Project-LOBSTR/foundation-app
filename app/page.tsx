@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
@@ -16,7 +17,10 @@ type ButtonProps = {
 
 export default function Home() {
   const router = useRouter()
-  const userNpub = useAppSelector(({ publickey }) => publickey)
+
+  const userNpub = useAppSelector(({ user }) => user.publickey)
+
+  console.log(userNpub)
 
   useEffect(() => {
     if (userNpub) router.push('/dashboard')
