@@ -6,15 +6,18 @@ import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
 import { npubEncode } from 'nostr-tools/nip19'
+import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
+import { login } from '@/redux/features/user'
 
 const SignIn = () => {
   const [nsec, setNsec] = useState<string | undefined>(undefined)
   const [showNsecEntry, setShowNsecEntry] = useState<boolean>(false)
 
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const loginWithPrivKey = useCallback(async () => {
     if (!nsec) return
@@ -28,10 +31,10 @@ const SignIn = () => {
     const user = await privKeySigner.user()
 
     if (user.pubkey) {
-      console.log(npubEncode(user.pubkey))
+      dispatch(login(npubEncode(user.pubkey)))
       router.push('/dashboard')
     }
-  }, [nsec, router])
+  }, [dispatch, nsec, router])
 
   const loginWithSigner = useCallback(async () => {
     const nip07signer = new NDKNip07Signer()
@@ -39,10 +42,10 @@ const SignIn = () => {
     const user = await nip07signer.user()
 
     if (user.pubkey) {
-      console.log(user)
+      dispatch(login(npubEncode(user.pubkey)))
       router.push('/dashboard')
     }
-  }, [router])
+  }, [dispatch, router])
 
   return (
     <Layout heading="Login to LOBSTR">

@@ -13,11 +13,14 @@
   "dependencies": {
     "@nostr-dev-kit/ndk": "^2.3.0",
     "@radix-ui/react-toast": "^1.1.5",
+    "@reduxjs/toolkit": "^2.0.1",
     "next": "14.0.4",
     "nostr-tools": "^2.1.2",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.49.2",
+    "react-redux": "^9.0.4",
+    "redux-persist": "^6.0.0",
     "tailwind-variants": "^0.1.19"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/redux-persist": "^4.3.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
