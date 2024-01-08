@@ -1,9 +1,12 @@
 'use client'
 
+import { useEffect } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
+import { useAppSelector } from '@/redux/store'
 
 type ButtonProps = {
   id: string
@@ -14,6 +17,12 @@ type ButtonProps = {
 
 export default function Home() {
   const router = useRouter()
+
+  const userNpub = useAppSelector(({ user }) => user.publickey)
+
+  useEffect(() => {
+    if (userNpub) router.push('/dashboard')
+  }, [router, userNpub])
 
   const buttons: ButtonProps[] = [
     {
