@@ -20,8 +20,6 @@ export default function Home() {
 
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
-  console.log(userNpub)
-
   useEffect(() => {
     if (userNpub) router.push('/dashboard')
   }, [router, userNpub])

@@ -17,7 +17,7 @@ import { userReducer } from './features/user'
 const persistConfig = {
   key: 'root',
   storage,
-  // whitelist: ['user'],
+  whitelist: ['publickey'],
 }
 
 const persistedReducer = { user: persistReducer(persistConfig, userReducer) }
