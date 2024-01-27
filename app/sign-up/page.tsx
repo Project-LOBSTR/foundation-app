@@ -38,15 +38,15 @@ const SignUp = () => {
         <div className="flex flex-col w-full h-full py-10 items-center ">
           <LobstrLogo size={200} />
         </div>
-        <div className="item-center flex flex-col gap-2 align-middle w-full px-20">
+        <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
           <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
             Save your keys somewhere safe
           </h1>
-          <p className="text-center text-black align-center">
-            {keys?.npub.slice(0, 20)}....
+          <p className="text-center bg-gray-100 rounded-md text-black align-center">
+            {keys?.npub.slice(0, 30)}....
           </p>
-          <p className="text-center text-black align-center">
-            {keys?.nsec.slice(0, 20)}....
+          <p className="text-center bg-gray-100 rounded-md text-black align-center">
+            {keys?.nsec.slice(0, 30)}....
           </p>
           <Button variant="primary" onClick={() => router.push('/dashboard')}>
             Continue
