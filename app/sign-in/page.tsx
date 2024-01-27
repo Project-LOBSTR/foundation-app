@@ -65,7 +65,7 @@ const SignIn = () => {
         </Button>
 
         <input
-          className="focus: border-2 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 outline-none"
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
           onChange={(e) => setNsec(e.target.value)}
           placeholder="Enter your nsec"
           type="password"
