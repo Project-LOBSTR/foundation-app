@@ -1,9 +1,11 @@
 'use client'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 import { generateSecretKey, getPublicKey } from 'nostr-tools'
 // import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
+import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
+import { set } from 'ramda'
 import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
@@ -12,6 +14,9 @@ import LobstrLogo from '@/components/LobstrLogo'
 import { login } from '@/redux/features/user'
 
 const SignUp = () => {
+  const [keys, setKeys] = useState<Record<string, string | Uint8Array> | null>(
+    null,
+  )
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -19,14 +24,36 @@ const SignUp = () => {
     const secret = generateSecretKey()
     const pubKey = getPublicKey(secret)
 
-    // TODO: show the use to copy down secret
+    const nsec = nsecEncode(secret)
+    const npub = npubEncode(pubKey)
 
-    // const nsec = nsecEncode(secret)
-    // const npub = npubEncode(pubKey)
+    setKeys({ nsec, npub })
 
     dispatch(login(pubKey))
-    router.push('/dashboard')
-  }, [dispatch, router])
+  }, [dispatch])
+
+  if (keys)
+    return (
+      <Layout>
+        <div className="flex flex-col w-full h-full py-10 items-center ">
+          <LobstrLogo size={200} />
+        </div>
+        <div className="item-center flex flex-col gap-2 align-middle w-full px-20">
+          <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
+            Save your keys somewhere safe
+          </h1>
+          <p className="text-center text-black align-center">
+            {keys?.npub.slice(0, 20)}....
+          </p>
+          <p className="text-center text-black align-center">
+            {keys?.nsec.slice(0, 20)}....
+          </p>
+          <Button variant="primary" onClick={() => router.push('/dashboard')}>
+            Continue
+          </Button>
+        </div>
+      </Layout>
+    )
 
   return (
     <Layout>
