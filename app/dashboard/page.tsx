@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
+import LobstrLogo from '@/components/LobstrLogo'
 import { logout } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
 
@@ -24,11 +25,18 @@ const Dashboard = () => {
   }, [dispatch, router])
 
   return (
-    <Layout heading="Dashboard">
-      <div className="text-black max-w-sm text-xs">{nsec}</div>
-      <Button onClick={signOut} variant="primary">
-        Logout
-      </Button>
+    <Layout canGoBack={false}>
+      <div className="flex flex-col w-full h-full py-10 items-center ">
+        <LobstrLogo size={200} />
+      </div>
+      <div className="text-black max-w-sm text-xs flex align-middle">
+        {nsec}
+      </div>
+      <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
+        <Button onClick={signOut} variant="primary">
+          Logout
+        </Button>
+      </div>
     </Layout>
   )
 }
