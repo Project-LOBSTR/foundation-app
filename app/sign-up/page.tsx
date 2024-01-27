@@ -1,22 +1,24 @@
 'use client'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 import { generateSecretKey, getPublicKey } from 'nostr-tools'
-// import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
 import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
-import { set } from 'ramda'
 import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
 import { login } from '@/redux/features/user'
+import { useAppSelector } from '@/redux/store'
 
 const SignUp = () => {
   const [keys, setKeys] = useState<Record<string, string | Uint8Array> | null>(
     null,
   )
+
+  const userNpub = useAppSelector(({ user }) => user.publickey)
+
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -31,6 +33,13 @@ const SignUp = () => {
 
     dispatch(login(pubKey))
   }, [dispatch])
+
+  useEffect(() => {
+    if (userNpub) router.push('/dashboard')
+  }, [
+    router,
+    /** userNpub not a dependency */
+  ])
 
   if (keys)
     return (
