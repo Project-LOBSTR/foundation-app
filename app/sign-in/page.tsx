@@ -9,11 +9,11 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
+import LobstrLogo from '@/components/LobstrLogo'
 import { login } from '@/redux/features/user'
 
 const SignIn = () => {
   const [nsec, setNsec] = useState<string | undefined>(undefined)
-  const [showNsecEntry, setShowNsecEntry] = useState<boolean>(false)
 
   const router = useRouter()
   const dispatch = useDispatch()
@@ -28,6 +28,8 @@ const SignIn = () => {
     const privKeySigner = new NDKPrivateKeySigner(privatekey.data as string)
 
     const user = await privKeySigner.user()
+
+    console.log(user.pubkey)
 
     if (user.pubkey) {
       dispatch(login(user.pubkey))
@@ -47,33 +49,27 @@ const SignIn = () => {
   }, [dispatch, router])
 
   return (
-    <Layout heading="Login to LOBSTR">
-      <div className="item-center flex flex-col gap-2 align-middle">
+    <Layout>
+      <div className="flex flex-col w-full h-full py-16 items-center ">
+        <LobstrLogo size={300} />
+      </div>
+      <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
+        <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
+          Login to LOBSTR
+        </h1>
         <Button variant="primary" onClick={loginWithSigner}>
           Use NOSTR signer
         </Button>
-        <Button
-          variant="primary"
-          onClick={() => setShowNsecEntry((prev: boolean) => !prev)}
-        >
+        <Button variant="primary" onClick={loginWithPrivKey}>
           Use with nsec
         </Button>
-        {showNsecEntry && (
-          <div className="flex flex-row gap-2">
-            <input
-              className="focus: border-2 border-detail px-2 text-black placeholder-detail outline-none"
-              onChange={(e) => setNsec(e.target.value)}
-              placeholder="Enter your nsec"
-              type="password"
-            />
-            <Button
-              className="rounded-sm bg-secondary  text-sm text-white"
-              onClick={loginWithPrivKey}
-            >
-              Submit
-            </Button>
-          </div>
-        )}
+
+        <input
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
+          onChange={(e) => setNsec(e.target.value)}
+          placeholder="Enter your nsec"
+          type="password"
+        />
       </div>
     </Layout>
   )

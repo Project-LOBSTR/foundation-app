@@ -1,26 +1,26 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useCallback } from 'react'
 
-import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { IoIosArrowBack } from 'react-icons/io'
 
 type Props = {
-  heading?: string
+  canGoBack?: boolean
 }
 
-const Layout = ({ heading, children }: PropsWithChildren<Props>) => {
+const Layout = ({ children, canGoBack = true }: PropsWithChildren<Props>) => {
+  const router = useRouter()
+
+  const goBack = useCallback(() => {
+    router.back()
+  }, [router])
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-10 bg-white p-12">
-      <div className="flex flex-col items-center">
-        <Image
-          src={'/lobstr-logo.png'}
-          alt="Lobstrrr"
-          width={500}
-          height={500}
-          priority
-        />
-        {heading && (
-          <h1 className="font-heading text-xl text-primary-500">{heading}</h1>
-        )}
-      </div>
+    <main className="flex min-h-screen h-full flex-col bg-white">
+      {canGoBack && (
+        <div className="p-2" onClick={goBack}>
+          <IoIosArrowBack className="text-black" />
+        </div>
+      )}
       {children}
     </main>
   )
