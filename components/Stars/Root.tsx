@@ -65,10 +65,7 @@ export const Root = ({ initialRating = 0, ...props }: Props) => {
 
   return (
     <StarsContext.Provider value={{ handleRate, ratedList, rate }}>
-      <div
-        className={twMerge('flex', 'flex-row', props.className)}
-        {...props}
-      />
+      <div {...props} />
     </StarsContext.Provider>
   )
 }

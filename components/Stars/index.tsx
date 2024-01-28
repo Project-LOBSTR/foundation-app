@@ -1,7 +1,8 @@
 import { Control } from './Control'
 import { Root } from './Root'
+import { SubmitButton } from './SubmitButton'
 
-export { Root, Control }
+export { Root, Control, SubmitButton }
 
 // TODO:
 // 1. Add CSS according to design
