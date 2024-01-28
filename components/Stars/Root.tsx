@@ -7,13 +7,7 @@ import {
   useState,
 } from 'react'
 
-import { IconType } from 'react-icons'
-import { FaRegStar, FaStar } from 'react-icons/fa'
 import { twMerge } from 'tailwind-merge'
-
-type IStartsMap = {
-  [key: string]: IconType
-}
 
 type ListItems = 'filledStars' | 'emptyStars'
 
@@ -21,11 +15,6 @@ type IList = ListItems[]
 
 type IStars = {
   initialRating?: number
-}
-
-const starsMap: IStartsMap = {
-  filledStars: FaStar,
-  emptyStars: FaRegStar,
 }
 
 export type ButtonProps = ComponentProps<'button'> & IStars
