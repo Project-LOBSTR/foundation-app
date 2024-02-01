@@ -6,7 +6,7 @@ import { VariantProps, tv } from 'tailwind-variants'
 
 const button = tv({
   base: [
-    'rounded-2xl px-4 py-5 text-sm font-semibold outline-none shadow-sm',
+    'rounded-2xl flex flex-1 w-full px-4 py-3 text-sm font-semibold outline-none shadow-sm justify-center',
     'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-500',
     'active:opacity-80',
   ],
@@ -14,7 +14,7 @@ const button = tv({
   variants: {
     variant: {
       primary:
-        ' text-white dark:hover:bg-violet-600 hover:bg-violet-700 bg-gradient-lobstr dark:bg-gradient-lobstr',
+        'text-white dark:hover:bg-violet-600 hover:bg-violet-700 bg-gradient-lobstr dark:bg-gradient-lobstr',
       ghost:
         'rounded-md px-2 hover:bg-zinc-50 dark:hover:bg-white/5 shadow-sm text-zinc-500 dark:text-zinc-400',
       outline:

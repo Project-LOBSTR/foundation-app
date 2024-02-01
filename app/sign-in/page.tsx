@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
+import { FaFileSignature } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
@@ -28,8 +29,6 @@ const SignIn = () => {
     const privKeySigner = new NDKPrivateKeySigner(privatekey.data as string)
 
     const user = await privKeySigner.user()
-
-    console.log(user.pubkey)
 
     if (user.pubkey) {
       dispatch(login(user.pubkey))
@@ -57,12 +56,14 @@ const SignIn = () => {
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Login to LOBSTR
         </h1>
-        <Button variant="primary" onClick={loginWithSigner}>
-          Use NOSTR signer
-        </Button>
-        <Button variant="primary" onClick={loginWithPrivKey}>
-          Use with nsec
-        </Button>
+        {/** TODO: fixed width */}
+        <div
+          className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
+          onClick={loginWithSigner}
+        >
+          <FaFileSignature color="#3A167F" />
+          <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
+        </div>
 
         <input
           className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
@@ -70,6 +71,19 @@ const SignIn = () => {
           placeholder="Enter your nsec"
           type="password"
         />
+        {nsec?.length && (
+          <Button variant="primary" onClick={loginWithPrivKey}>
+            Use with nsec
+          </Button>
+        )}
+        <div
+          className="py-2"
+          onClick={() => router.push('/recover-seed-phrase')}
+        >
+          <p className="text-primary-500 text-xs">
+            Recover account with seed phrase
+          </p>
+        </div>
       </div>
     </Layout>
   )
