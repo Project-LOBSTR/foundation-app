@@ -25,6 +25,7 @@
     "react-icons": "^5.0.1",
     "react-redux": "^9.0.4",
     "redux-persist": "^6.0.0",
+    "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^0.1.19"
   },
   "devDependencies": {
