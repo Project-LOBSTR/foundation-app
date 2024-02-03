@@ -15,7 +15,7 @@ const Layout = ({ children, canGoBack = true }: PropsWithChildren<Props>) => {
   }, [router])
 
   return (
-    <main className="flex min-h-screen h-full flex-col bg-white">
+    <main className="flex min-h-screen h-full flex-col bg-white ">
       {canGoBack && (
         <div className="p-2" onClick={goBack}>
           <IoIosArrowBack className="text-black" />
