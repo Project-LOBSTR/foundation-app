@@ -17,7 +17,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
 
   const userNpub = useAppSelector(({ user }) => user.publickey)
-  const nsec = npubEncode(userNpub)
+  const npub = npubEncode(userNpub)
 
   const signOut = useCallback(() => {
     dispatch(logout())
@@ -29,9 +29,7 @@ const Dashboard = () => {
       <div className="flex flex-col w-full h-full py-10 items-center ">
         <LobstrLogo size={200} />
       </div>
-      <div className="text-black max-w-sm text-xs flex align-middle">
-        {nsec}
-      </div>
+      <div className="text-black max-w-sm text-xs flex self-center">{npub}</div>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <Button onClick={signOut} variant="primary">
           Logout
