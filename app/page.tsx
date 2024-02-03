@@ -46,7 +46,7 @@ export default function Home() {
       <div className="my-10 flex flex-col items-center gap-5  px-10">
         <div>
           <h1 className="text-3xl  font-semibold text-center font-heading text-black">
-            Hey
+            Welcome to LOBSTR
           </h1>
           <p className="text-black font-normal text-center font-body">
             Create your NOSTR account or log in with your existing account
