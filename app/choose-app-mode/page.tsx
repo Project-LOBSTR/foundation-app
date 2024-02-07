@@ -8,6 +8,7 @@ import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
 import { APP_MODE, setMode } from '@/redux/features/mode'
+import { useAppSelector } from '@/redux/store'
 
 export type Mode = {
   name: string
@@ -25,6 +26,9 @@ const modeOptions: Mode[] = [
 
 const ChooseAppMode = () => {
   const [selectedMode, setSelectedMode] = useState<APP_MODE | null>(null)
+
+  const mode = useAppSelector((state) => state)
+  console.log(mode)
 
   const dispatch = useDispatch()
 

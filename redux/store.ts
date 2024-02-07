@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import {
   persistStore,
@@ -20,10 +20,13 @@ const persistConfig = {
   storage,
 }
 
-const persistedReducer = {
-  user: persistReducer(persistConfig, userReducer),
-  mode: persistReducer(persistConfig, modeReducer),
-}
+const persistedReducer = combineReducers({
+  user: persistReducer(
+    { ...persistConfig, blacklist: ['appMode'] },
+    userReducer,
+  ),
+  mode: persistReducer({ ...persistConfig, blacklist: ['user'] }, modeReducer),
+})
 
 export const store = configureStore({
   reducer: persistedReducer,
