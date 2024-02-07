@@ -1,4 +1,5 @@
 'use client'
+// TODO: this page is redundant
 
 import { useCallback } from 'react'
 

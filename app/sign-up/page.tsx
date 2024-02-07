@@ -50,7 +50,7 @@ const SignUp = () => {
   }
 
   useEffect(() => {
-    if (userNpub) router.push('/dashboard')
+    if (userNpub) router.push('/choose-app-mode')
   }, [
     router,
     /** userNpub not a dependency */
@@ -79,7 +79,10 @@ const SignUp = () => {
               )
             })}
           </div>
-          <Button variant="primary" onClick={() => router.push('/dashboard')}>
+          <Button
+            variant="primary"
+            onClick={() => router.push('/choose-app-mode')}
+          >
             Continue
           </Button>
         </div>

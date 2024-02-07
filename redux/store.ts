@@ -12,15 +12,18 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { modeReducer } from './features/mode'
 import { userReducer } from './features/user'
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['publickey'],
 }
 
-const persistedReducer = { user: persistReducer(persistConfig, userReducer) }
+const persistedReducer = {
+  user: persistReducer(persistConfig, userReducer),
+  mode: persistReducer(persistConfig, modeReducer),
+}
 
 export const store = configureStore({
   reducer: persistedReducer,
