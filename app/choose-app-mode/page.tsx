@@ -1,6 +1,7 @@
 'use client'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
+import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 import { twMerge } from 'tailwind-merge'
 
@@ -27,10 +28,15 @@ const modeOptions: Mode[] = [
 const ChooseAppMode = () => {
   const [selectedMode, setSelectedMode] = useState<APP_MODE | null>(null)
 
-  const mode = useAppSelector((state) => state)
-  console.log(mode)
+  const { pubKey } = useAppSelector(({ mode, user }) => {
+    return {
+      mode: mode.appMode,
+      pubKey: user.publickey,
+    }
+  })
 
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const onSubmit = useCallback(() => {
     if (!selectedMode) return
@@ -40,6 +46,9 @@ const ChooseAppMode = () => {
     // TODO: navigate
   }, [dispatch, selectedMode])
 
+  useEffect(() => {
+    if (!pubKey) router.push('/')
+  }, [pubKey, router])
   return (
     <Layout canGoBack={false}>
       <div className="flex flex-col w-full h-full py-10 items-center ">
