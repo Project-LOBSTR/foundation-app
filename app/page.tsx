@@ -53,7 +53,7 @@ export default function Home() {
           </p>
         </div>
         {buttons.map(({ id, buttonText, onClick }) => (
-          <div key={id} className="text-center w-full">
+          <div key={id} className="text-center flex w-full">
             <Button
               variant="primary"
               onClick={onClick}
