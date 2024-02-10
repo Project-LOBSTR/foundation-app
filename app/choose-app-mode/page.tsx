@@ -1,10 +1,12 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 
+import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
-import { twMerge } from 'tailwind-merge'
 
+import Logo from '@/assets/lobstr-logo.png'
+import subaImage from '@/assets/scuba.webp'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
@@ -14,10 +16,11 @@ import { useAppSelector } from '@/redux/store'
 export type Mode = {
   name: string
   mode: APP_MODE
+  image?: StaticImageData
 }
 
 const modeOptions: Mode[] = [
-  { name: 'Scuba Diving', mode: APP_MODE.SCUBA_DIVING },
+  { name: 'Scuba Diving', mode: APP_MODE.SCUBA_DIVING, image: subaImage },
   {
     // TODO: only in development mode
     name: 'Demo (dev mode)',
@@ -49,34 +52,51 @@ const ChooseAppMode = () => {
   useEffect(() => {
     if (!pubKey) router.push('/')
   }, [pubKey, router])
+
   return (
     <Layout canGoBack={false}>
-      <div className="flex flex-col w-full h-full py-10 items-center ">
-        <LobstrLogo size={200} />
-      </div>
-      <div className="flex flex-col gap-2 p-6 align-middle items-center">
-        <h1 className="text-primary-500 font-heading font-semibold">
-          Choose your destiny
-        </h1>
-        {modeOptions.map(({ name, mode }: Mode) => {
-          const isSelected = mode === selectedMode
+      <div className="bg-gradient-to-b from-blue-500 to-teal-500">
+        <div className="flex flex-col h-screen bg-white/10 backdrop-blur-lg border-x border-gray-100 w-full max-w-3xl mx-auto px-4">
+          <LobstrLogo size={200} />
+          <div className="flex-1">
+            <strong className="block font-heading text-3xl text-primary-500 text-center mb-6">
+              Choose your destiny
+            </strong>
+            {modeOptions.map(({ name, mode, image }: Mode) => {
+              const isSelected = mode === selectedMode
+              const conditionalStyles = isSelected
+                ? 'border-4 border-solid border-primary-400'
+                : 'bg-gradient-lobstr border-none text-white'
 
-          return (
-            <div
-              key={mode}
-              className={twMerge(
-                'text-primary-700 border-primary-700 border rounded-md px-2 py-4 w-full font-bold',
-                isSelected && 'bg-gradient-lobstr text-white border-none',
-              )}
-              onClick={() => setSelectedMode(mode)}
+              return (
+                <div
+                  key={mode}
+                  className={`relative flex h-16 w-full  my-1 mx-auto cursor-pointer items-center justify-center overflow-hidden rounded-full shadow-lg transition duration-200 ${conditionalStyles}`}
+                  onClick={() => setSelectedMode(mode)}
+                >
+                  <Image
+                    src={image || Logo}
+                    alt={name}
+                    className="h-full w-full object-cover opacity-70 hover:opacity-100"
+                  />
+                  <span className="pointer-events-none absolute flex h-full w-full items-center justify-center text-center font-bold">
+                    {name}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+          <div className="pb-8">
+            {/* TODO: Proper disable class and styles for button */}
+            <Button
+              variant="primary"
+              onClick={onSubmit}
+              disabled={!selectedMode}
             >
-              {name}
-            </div>
-          )
-        })}
-        <Button variant="ghost" onClick={onSubmit}>
-          Continue
-        </Button>
+              Continue
+            </Button>
+          </div>
+        </div>
       </div>
     </Layout>
   )
