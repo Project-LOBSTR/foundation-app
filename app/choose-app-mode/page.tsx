@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
 import Logo from '@/assets/lobstr-logo.png'
+// TODO: images should be imported from via https and not from local
 import subaImage from '@/assets/scuba.webp'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
