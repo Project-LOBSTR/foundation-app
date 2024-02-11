@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import {
   persistStore,
@@ -12,15 +12,13 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { modeReducer } from './features/mode'
 import { userReducer } from './features/user'
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ['publickey'],
-}
-
-const persistedReducer = { user: persistReducer(persistConfig, userReducer) }
+const persistedReducer = combineReducers({
+  user: persistReducer({ key: 'root', storage }, userReducer),
+  mode: persistReducer({ key: 'mode', storage }, modeReducer),
+})
 
 export const store = configureStore({
   reducer: persistedReducer,

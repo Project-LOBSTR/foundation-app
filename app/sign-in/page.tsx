@@ -32,7 +32,8 @@ const SignIn = () => {
 
     if (user.pubkey) {
       dispatch(login(user.pubkey))
-      router.push('/dashboard')
+      // TODO: depends if they've onboarded on lobstr already
+      router.push('/choose-app-mode')
     }
   }, [dispatch, nsec, router])
 
@@ -43,7 +44,8 @@ const SignIn = () => {
 
     if (user.pubkey) {
       dispatch(login(user.pubkey))
-      router.push('/dashboard')
+      // TODO: depends if they've onboarded on lobstr already
+      router.push('/choose-app-mode')
     }
   }, [dispatch, router])
 

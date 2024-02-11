@@ -11,6 +11,7 @@ const LobstrLogo = ({ size }: Props) => {
         width={size}
         height={size}
         priority
+        className="mx-auto mt-8 mb-4"
       />
     </div>
   )
