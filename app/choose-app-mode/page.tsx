@@ -46,9 +46,9 @@ const ChooseAppMode = () => {
     if (!selectedMode) return
 
     dispatch(setMode({ appMode: selectedMode }))
-
-    // TODO: navigate
-  }, [dispatch, selectedMode])
+    // TODO: navigate dynamically
+    router.push('/scuba-onboarding/personal-details')
+  }, [dispatch, router, selectedMode])
 
   useEffect(() => {
     if (!pubKey) router.push('/')
