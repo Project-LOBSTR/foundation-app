@@ -41,7 +41,7 @@ const SignUp = () => {
     const npub = npubEncode(pubKey)
 
     setKeys({ nsec, npub, seedPhrase })
-    dispatch(login(pubKey))
+    dispatch(login({ publickey: pubKey, privatekey: secret }))
   }, [dispatch])
 
   const seedPhraseSplit = keys?.seedPhrase.split(' ')

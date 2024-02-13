@@ -31,7 +31,7 @@ const SignIn = () => {
     const user = await privKeySigner.user()
 
     if (user.pubkey) {
-      dispatch(login(user.pubkey))
+      dispatch(login({ publickey: user.pubkey, privatekey: privatekey.data }))
       // TODO: depends if they've onboarded on lobstr already
       router.push('/choose-app-mode')
     }
@@ -43,7 +43,7 @@ const SignIn = () => {
     const user = await nip07signer.user()
 
     if (user.pubkey) {
-      dispatch(login(user.pubkey))
+      dispatch(login({ publickey: user.pubkey }))
       // TODO: depends if they've onboarded on lobstr already
       router.push('/choose-app-mode')
     }

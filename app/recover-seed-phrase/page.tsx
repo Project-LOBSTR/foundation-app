@@ -30,7 +30,7 @@ const RecoverSeedPhrase = () => {
 
     if (!pubKey) return
 
-    dispatch(login(pubKey))
+    dispatch(login({ publickey: pubKey, privatekey: encodedSecret }))
     router.push('/dashboard')
   }
 
