@@ -1,8 +1,9 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
-import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
+import { bytesToHex } from '@noble/hashes/utils'
+import NDK, { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
 import { FaFileSignature } from 'react-icons/fa'
@@ -20,35 +21,32 @@ const SignIn = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const loginWithPrivKey = useCallback(async () => {
-    if (!nsec) return
+  const ndk = useMemo(
+    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
+    [],
+  )
 
-    const privatekey = nip19.decode(nsec)
+  const newLogin = useCallback(async () => {
+    const signer = !nsec
+      ? new NDKNip07Signer()
+      : new NDKPrivateKeySigner(nip19.decode(nsec)?.data as string)
 
-    if (!privatekey?.data) return
+    ndk.signer = signer
 
-    const privKeySigner = new NDKPrivateKeySigner(privatekey.data as string)
-
-    const user = await privKeySigner.user()
+    const user = await signer.user()
 
     if (user.pubkey) {
-      dispatch(login({ publickey: user.pubkey, privatekey: privatekey.data }))
+      dispatch(
+        login({
+          publickey: user.pubkey,
+          privatekey:
+            nsec && bytesToHex(nip19.decode(nsec)?.data as Uint8Array),
+        }),
+      )
       // TODO: depends if they've onboarded on lobstr already
       router.push(routes.chooseAppMode)
     }
-  }, [dispatch, nsec, router])
-
-  const loginWithSigner = useCallback(async () => {
-    const nip07signer = new NDKNip07Signer()
-
-    const user = await nip07signer.user()
-
-    if (user.pubkey) {
-      dispatch(login({ publickey: user.pubkey }))
-      // TODO: depends if they've onboarded on lobstr already
-      router.push(routes.chooseAppMode)
-    }
-  }, [dispatch, router])
+  }, [dispatch, ndk, nsec, router])
 
   return (
     <Layout>
@@ -62,7 +60,7 @@ const SignIn = () => {
         {/** TODO: fixed width */}
         <div
           className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
-          onClick={loginWithSigner}
+          onClick={newLogin}
         >
           <FaFileSignature color="#3A167F" />
           <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
@@ -75,7 +73,7 @@ const SignIn = () => {
           type="password"
         />
         {nsec?.length && (
-          <Button variant="primary" onClick={loginWithPrivKey}>
+          <Button variant="primary" onClick={newLogin}>
             Use with nsec
           </Button>
         )}
