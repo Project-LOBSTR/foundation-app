@@ -1,23 +1,64 @@
 'use client'
-import { useCallback } from 'react'
 
-import { NDKEvent } from '@nostr-dev-kit/ndk'
+import { useCallback, useEffect, useMemo } from 'react'
+
+import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { useAppSelector } from '@/redux/store'
 
 const PersonalDetails = () => {
+  const { publickey, privatekey } = useAppSelector(({ user }) => {
+    return {
+      publickey: user.publickey,
+      privatekey: user.privatekey,
+    }
+  })
   const { handleSubmit, register } = useForm<FieldValues>()
 
-  const onSubmit = useCallback((data: FieldValues) => {
-    console.log(data)
+  const ndk = useMemo(
+    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
+    [],
+  )
 
-    new NDKEvent({
-      kind: 0, // metadata
-    })
-  }, [])
+  ndk.connect()
+  const signer = new NDKPrivateKeySigner(privatekey)
+  ndk.signer = signer
+
+  const onSubmit = useCallback(
+    async ({ firstName, lastName, dateOfBirth }: FieldValues) => {
+      const event = new NDKEvent(ndk, {
+        kind: NDKKind.Metadata,
+        created_at: Math.floor(new Date().getTime() / 1000),
+        content: JSON.stringify({
+          firstName,
+          lastName,
+          dateOfBirth,
+        }),
+        pubkey: publickey,
+        tags: [],
+      })
+
+      await event.publish()
+
+      const events = await ndk.fetchEvents({ authors: [publickey] })
+
+      console.log(events)
+    },
+    [ndk, publickey],
+  )
+
+  const fetchEvents = useCallback(async () => {
+    const events = await ndk.fetchEvents({ authors: [publickey] })
+    return events
+  }, [ndk, publickey])
+
+  useEffect(() => {
+    fetchEvents()
+  }, [fetchEvents, ndk, publickey])
 
   return (
     <Layout>
@@ -44,7 +85,7 @@ const PersonalDetails = () => {
           {...register('dateOfBirth')}
         />
 
-        <Button variant="primary" onSubmit={handleSubmit(onSubmit)}>
+        <Button variant="primary" onClick={handleSubmit(onSubmit)}>
           Continue
         </Button>
       </div>
