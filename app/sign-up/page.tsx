@@ -7,7 +7,6 @@ import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { getPublicKey } from 'nostr-tools'
 import { generateSeedWords, privateKeyFromSeedWords } from 'nostr-tools/nip06'
-import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 
@@ -18,17 +17,11 @@ import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
 
-type Keys = {
-  nsec: string
-  npub: string
-  seedPhrase: string
-}
-
 const SignUp = () => {
   const { handleSubmit, register } = useForm<FieldValues>()
   const dispatch = useDispatch()
   const router = useRouter()
-  const [keys, setKeys] = useState<Keys | null>(null)
+  const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
@@ -48,9 +41,6 @@ const SignUp = () => {
 
       const pubKey = getPublicKey(encodedSecret)
 
-      const nsec = nsecEncode(encodedSecret)
-      const npub = npubEncode(pubKey)
-
       const signer = new NDKPrivateKeySigner(secret)
 
       ndk.signer = signer
@@ -68,13 +58,13 @@ const SignUp = () => {
 
       await event.publish()
 
-      setKeys({ nsec, npub, seedPhrase })
+      setMnenonomic(seedPhrase)
       dispatch(login({ publickey: pubKey, privatekey: secret }))
     },
     [dispatch, ndk],
   )
 
-  const seedPhraseSplit = keys?.seedPhrase.split(' ')
+  const seedPhraseSplit = mnenonomic?.split(' ')
   const transformCaption = (word: string, index: number) => {
     return `${index + 1}. ${word}`
   }
@@ -90,7 +80,7 @@ const SignUp = () => {
     /** userNpub not a dependency */
   ])
 
-  if (keys)
+  if (mnenonomic)
     return (
       <Layout>
         <div className="flex flex-col w-full h-full py-10 items-center ">
