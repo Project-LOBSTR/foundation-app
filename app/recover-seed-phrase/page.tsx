@@ -31,7 +31,7 @@ const RecoverSeedPhrase = () => {
 
     if (!pubKey) return
 
-    dispatch(login({ publickey: pubKey, privatekey: encodedSecret }))
+    dispatch(login({ publickey: pubKey, privatekey: recoveredSecret }))
     // TODO: check is user has onboarded
     router.push(routes.chooseAppMode)
   }
