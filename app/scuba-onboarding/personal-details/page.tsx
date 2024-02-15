@@ -2,7 +2,12 @@
 
 import { useCallback, useEffect, useMemo } from 'react'
 
-import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
+import NDK, {
+  NDKEvent,
+  NDKKind,
+  NDKNip07Signer,
+  NDKPrivateKeySigner,
+} from '@nostr-dev-kit/ndk'
 import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
@@ -25,11 +30,17 @@ const PersonalDetails = () => {
   )
 
   ndk.connect()
-  const signer = new NDKPrivateKeySigner(privatekey)
-  ndk.signer = signer
+
+  const nip07signer = useMemo(() => new NDKNip07Signer(), [])
+  const signer = useMemo(
+    () => new NDKPrivateKeySigner(privatekey),
+    [privatekey],
+  )
 
   const onSubmit = useCallback(
     async ({ firstName, lastName, dateOfBirth }: FieldValues) => {
+      ndk.signer = privatekey ? signer : nip07signer
+
       const event = new NDKEvent(ndk, {
         kind: NDKKind.Metadata,
         created_at: Math.floor(new Date().getTime() / 1000),
@@ -48,7 +59,7 @@ const PersonalDetails = () => {
 
       console.log(events)
     },
-    [ndk, publickey],
+    [ndk, nip07signer, privatekey, publickey, signer],
   )
 
   const fetchEvents = useCallback(async () => {
