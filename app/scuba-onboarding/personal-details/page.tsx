@@ -14,6 +14,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { useAppSelector } from '@/redux/store'
 
 const PersonalDetails = () => {
@@ -58,7 +59,7 @@ const PersonalDetails = () => {
 
       await event.publish()
 
-      router.push('/scuba-onboarding/emergency-contact')
+      router.push(routes.scubaOnboarding.emergencyContact)
     },
     [ndk, nip07signer, privatekey, publickey, router, signer],
   )

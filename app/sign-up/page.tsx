@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
 
@@ -49,8 +50,12 @@ const SignUp = () => {
     return `${index + 1}. ${word}`
   }
 
+  const navigateToChooseAppMode = useCallback(() => {
+    router.push(routes.chooseAppMode)
+  }, [router])
+
   useEffect(() => {
-    if (userNpub) router.push('/choose-app-mode')
+    if (userNpub) navigateToChooseAppMode()
   }, [
     router,
     /** userNpub not a dependency */
@@ -79,10 +84,7 @@ const SignUp = () => {
               )
             })}
           </div>
-          <Button
-            variant="primary"
-            onClick={() => router.push('/choose-app-mode')}
-          >
+          <Button variant="primary" onClick={navigateToChooseAppMode}>
             Continue
           </Button>
         </div>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { useAppSelector } from '@/redux/store'
 
 type ButtonProps = {
@@ -22,19 +23,19 @@ export default function Home() {
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
   useEffect(() => {
-    if (userNpub) router.push('/choose-app-mode')
+    if (userNpub) router.push(routes.chooseAppMode)
   }, [router, userNpub])
 
   const buttons: ButtonProps[] = [
     {
       id: 'sign-up',
       buttonText: 'Create new account',
-      onClick: () => router.push('/sign-up'),
+      onClick: () => router.push(routes.signUp),
     },
     {
       id: 'sign-in',
       buttonText: 'Sign in with NOSTR',
-      onClick: () => router.push('/sign-in'),
+      onClick: () => router.push(routes.signIn),
     },
   ]
 

@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
 const RecoverSeedPhrase = () => {
@@ -31,7 +32,8 @@ const RecoverSeedPhrase = () => {
     if (!pubKey) return
 
     dispatch(login({ publickey: pubKey, privatekey: encodedSecret }))
-    router.push('/dashboard')
+    // TODO: check is user has onboarded
+    router.push(routes.chooseAppMode)
   }
 
   return (

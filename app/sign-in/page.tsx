@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
 const SignIn = () => {
@@ -33,7 +34,7 @@ const SignIn = () => {
     if (user.pubkey) {
       dispatch(login({ publickey: user.pubkey, privatekey: privatekey.data }))
       // TODO: depends if they've onboarded on lobstr already
-      router.push('/choose-app-mode')
+      router.push(routes.chooseAppMode)
     }
   }, [dispatch, nsec, router])
 
@@ -45,7 +46,7 @@ const SignIn = () => {
     if (user.pubkey) {
       dispatch(login({ publickey: user.pubkey }))
       // TODO: depends if they've onboarded on lobstr already
-      router.push('/choose-app-mode')
+      router.push(routes.chooseAppMode)
     }
   }, [dispatch, router])
 
@@ -80,7 +81,7 @@ const SignIn = () => {
         )}
         <div
           className="py-2"
-          onClick={() => router.push('/recover-seed-phrase')}
+          onClick={() => router.push(routes.recoverSeedPhrase)}
         >
           <p className="text-primary-500 text-xs">
             Recover account with seed phrase
