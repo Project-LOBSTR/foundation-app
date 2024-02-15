@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import NDK, {
   NDKEvent,
@@ -8,6 +8,7 @@ import NDK, {
   NDKNip07Signer,
   NDKPrivateKeySigner,
 } from '@nostr-dev-kit/ndk'
+import { useRouter } from 'next/navigation'
 import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
@@ -16,13 +17,15 @@ import LobstrLogo from '@/components/LobstrLogo'
 import { useAppSelector } from '@/redux/store'
 
 const PersonalDetails = () => {
+  const { handleSubmit, register } = useForm<FieldValues>()
+  const router = useRouter()
+
   const { publickey, privatekey } = useAppSelector(({ user }) => {
     return {
       publickey: user.publickey,
       privatekey: user.privatekey,
     }
   })
-  const { handleSubmit, register } = useForm<FieldValues>()
 
   const ndk = useMemo(
     () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
@@ -55,21 +58,10 @@ const PersonalDetails = () => {
 
       await event.publish()
 
-      const events = await ndk.fetchEvents({ authors: [publickey] })
-
-      console.log(events)
+      router.push('/scuba-onboarding/emergency-contact')
     },
-    [ndk, nip07signer, privatekey, publickey, signer],
+    [ndk, nip07signer, privatekey, publickey, router, signer],
   )
-
-  const fetchEvents = useCallback(async () => {
-    const events = await ndk.fetchEvents({ authors: [publickey] })
-    return events
-  }, [ndk, publickey])
-
-  useEffect(() => {
-    fetchEvents()
-  }, [fetchEvents, ndk, publickey])
 
   return (
     <Layout>
