@@ -11,6 +11,7 @@ import subaImage from '@/assets/scuba.webp'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { APP_MODE, setMode } from '@/redux/features/mode'
 import { useAppSelector } from '@/redux/store'
 
@@ -46,9 +47,9 @@ const ChooseAppMode = () => {
     if (!selectedMode) return
 
     dispatch(setMode({ appMode: selectedMode }))
-
-    // TODO: navigate
-  }, [dispatch, selectedMode])
+    // TODO: navigate dynamically
+    router.push(routes.scubaOnboarding.personalDetails)
+  }, [dispatch, router, selectedMode])
 
   useEffect(() => {
     if (!pubKey) router.push('/')

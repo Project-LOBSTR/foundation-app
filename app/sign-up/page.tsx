@@ -1,62 +1,86 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { hexToBytes } from '@noble/hashes/utils'
+import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { getPublicKey } from 'nostr-tools'
 import { generateSeedWords, privateKeyFromSeedWords } from 'nostr-tools/nip06'
-import { npubEncode, nsecEncode } from 'nostr-tools/nip19'
+import { FieldValues, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
 
-type Keys = {
-  nsec: string
-  npub: string
-  seedPhrase: string
-}
-
 const SignUp = () => {
-  const [keys, setKeys] = useState<Keys | null>(null)
+  const { handleSubmit, register } = useForm<FieldValues>()
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const ndk = useMemo(
+    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
+    [],
+  )
 
-  const generateNostrKeys = useCallback(() => {
-    const seedPhrase = generateSeedWords()
+  ndk.connect()
 
-    const secret = privateKeyFromSeedWords(seedPhrase)
-    const encodedSecret = hexToBytes(secret)
+  const generateNostrKeys = useCallback(
+    async (data: FieldValues) => {
+      const seedPhrase = generateSeedWords()
 
-    const pubKey = getPublicKey(encodedSecret)
+      const secret = privateKeyFromSeedWords(seedPhrase)
+      const encodedSecret = hexToBytes(secret)
 
-    const nsec = nsecEncode(encodedSecret)
-    const npub = npubEncode(pubKey)
+      const pubKey = getPublicKey(encodedSecret)
 
-    setKeys({ nsec, npub, seedPhrase })
-    dispatch(login(pubKey))
-  }, [dispatch])
+      const signer = new NDKPrivateKeySigner(secret)
 
-  const seedPhraseSplit = keys?.seedPhrase.split(' ')
+      ndk.signer = signer
+
+      const event = new NDKEvent(ndk, {
+        kind: NDKKind.Metadata,
+        created_at: Math.floor(new Date().getTime() / 1000),
+        content: JSON.stringify({
+          name: data.name,
+          nip05: data.email,
+        }),
+        pubkey: pubKey,
+        tags: [],
+      })
+
+      await event.publish()
+
+      setMnenonomic(seedPhrase)
+      dispatch(login({ publickey: pubKey, privatekey: secret }))
+    },
+    [dispatch, ndk],
+  )
+
+  const seedPhraseSplit = mnenonomic?.split(' ')
   const transformCaption = (word: string, index: number) => {
     return `${index + 1}. ${word}`
   }
 
+  const navigateToChooseAppMode = useCallback(() => {
+    router.push(routes.chooseAppMode)
+  }, [router])
+
   useEffect(() => {
-    if (userNpub) router.push('/choose-app-mode')
+    if (userNpub) navigateToChooseAppMode()
   }, [
     router,
     /** userNpub not a dependency */
   ])
 
-  if (keys)
+  if (mnenonomic)
     return (
       <Layout>
         <div className="flex flex-col w-full h-full py-10 items-center ">
@@ -79,10 +103,7 @@ const SignUp = () => {
               )
             })}
           </div>
-          <Button
-            variant="primary"
-            onClick={() => router.push('/choose-app-mode')}
-          >
+          <Button variant="primary" onClick={navigateToChooseAppMode}>
             Continue
           </Button>
         </div>
@@ -94,11 +115,21 @@ const SignUp = () => {
       <div className="flex flex-col w-full h-full py-10 items-center ">
         <LobstrLogo size={200} />
       </div>
-      <div className="item-center flex flex-col gap-2 align-middle w-full px-20">
+      <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Create new account
         </h1>
-        <Button variant="primary" onClick={generateNostrKeys}>
+        <input
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
+          placeholder="Name"
+          {...register('name')}
+        />
+        <input
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
+          placeholder="Email address"
+          {...register('email')}
+        />
+        <Button variant="primary" onClick={handleSubmit(generateNostrKeys)}>
           Create NOSTR account
         </Button>
       </div>

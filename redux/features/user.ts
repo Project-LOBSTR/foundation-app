@@ -8,13 +8,16 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     publickey: '',
+    privatekey: '',
   },
   reducers: {
     login: (state, action) => {
-      state.publickey = action.payload
+      state.publickey = action.payload.publickey
+      state.privatekey = action.payload.privatekey
     },
     logout: (state) => {
       state.publickey = ''
+      state.privatekey = ''
     },
   },
 })

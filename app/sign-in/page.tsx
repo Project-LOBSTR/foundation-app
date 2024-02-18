@@ -1,8 +1,9 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
-import { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
+import { bytesToHex } from '@noble/hashes/utils'
+import NDK, { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { nip19 } from 'nostr-tools'
 import { FaFileSignature } from 'react-icons/fa'
@@ -11,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
+import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
 const SignIn = () => {
@@ -19,35 +21,32 @@ const SignIn = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const loginWithPrivKey = useCallback(async () => {
-    if (!nsec) return
+  const ndk = useMemo(
+    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
+    [],
+  )
 
-    const privatekey = nip19.decode(nsec)
+  const newLogin = useCallback(async () => {
+    const signer = !nsec
+      ? new NDKNip07Signer()
+      : new NDKPrivateKeySigner(nip19.decode(nsec)?.data as string)
 
-    if (!privatekey?.data) return
+    ndk.signer = signer
 
-    const privKeySigner = new NDKPrivateKeySigner(privatekey.data as string)
-
-    const user = await privKeySigner.user()
-
-    if (user.pubkey) {
-      dispatch(login(user.pubkey))
-      // TODO: depends if they've onboarded on lobstr already
-      router.push('/choose-app-mode')
-    }
-  }, [dispatch, nsec, router])
-
-  const loginWithSigner = useCallback(async () => {
-    const nip07signer = new NDKNip07Signer()
-
-    const user = await nip07signer.user()
+    const user = await signer.user()
 
     if (user.pubkey) {
-      dispatch(login(user.pubkey))
+      dispatch(
+        login({
+          publickey: user.pubkey,
+          privatekey:
+            nsec && bytesToHex(nip19.decode(nsec)?.data as Uint8Array),
+        }),
+      )
       // TODO: depends if they've onboarded on lobstr already
-      router.push('/choose-app-mode')
+      router.push(routes.chooseAppMode)
     }
-  }, [dispatch, router])
+  }, [dispatch, ndk, nsec, router])
 
   return (
     <Layout>
@@ -61,7 +60,7 @@ const SignIn = () => {
         {/** TODO: fixed width */}
         <div
           className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
-          onClick={loginWithSigner}
+          onClick={newLogin}
         >
           <FaFileSignature color="#3A167F" />
           <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
@@ -74,13 +73,13 @@ const SignIn = () => {
           type="password"
         />
         {nsec?.length && (
-          <Button variant="primary" onClick={loginWithPrivKey}>
+          <Button variant="primary" onClick={newLogin}>
             Use with nsec
           </Button>
         )}
         <div
           className="py-2"
-          onClick={() => router.push('/recover-seed-phrase')}
+          onClick={() => router.push(routes.recoverSeedPhrase)}
         >
           <p className="text-primary-500 text-xs">
             Recover account with seed phrase
