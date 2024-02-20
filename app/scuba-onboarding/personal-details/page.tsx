@@ -13,7 +13,6 @@ import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
 import { useAppSelector } from '@/redux/store'
 
@@ -65,10 +64,7 @@ const PersonalDetails = () => {
   )
 
   return (
-    <Layout>
-      <div className="flex flex-col w-full h-full py-8 items-center ">
-        <LobstrLogo size={200} />
-      </div>
+    <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-4 align-middle w-full px-10">
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-2">
           Personal details

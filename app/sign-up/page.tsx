@@ -82,10 +82,7 @@ const SignUp = () => {
 
   if (mnenonomic)
     return (
-      <Layout>
-        <div className="flex flex-col w-full h-full py-10 items-center ">
-          <LobstrLogo size={200} />
-        </div>
+      <Layout logoSize={200}>
         <div className="item-center flex flex-col gap-10 align-middle w-full px-10">
           <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500">
             Write down your seed phrase somewhere safe
@@ -111,10 +108,7 @@ const SignUp = () => {
     )
 
   return (
-    <Layout>
-      <div className="flex flex-col w-full h-full py-10 items-center ">
-        <LobstrLogo size={200} />
-      </div>
+    <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Create new account
