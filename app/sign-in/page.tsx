@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
+import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
@@ -21,10 +21,7 @@ const SignIn = () => {
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const ndk = useMemo(
-    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
-    [],
-  )
+  const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
 
   const newLogin = useCallback(async () => {
     const signer = !nsec
@@ -49,10 +46,7 @@ const SignIn = () => {
   }, [dispatch, ndk, nsec, router])
 
   return (
-    <Layout>
-      <div className="flex flex-col w-full h-full py-16 items-center ">
-        <LobstrLogo size={300} />
-      </div>
+    <Layout logoSize={300}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Login to LOBSTR

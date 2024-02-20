@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
@@ -37,12 +36,10 @@ const RecoverSeedPhrase = () => {
   }
 
   return (
-    <Layout canGoBack>
-      <div className="flex flex-col w-full h-full py-10 items-center gap-6 px-6">
-        <LobstrLogo size={200} />
-
+    <Layout canGoBack logoSize={200}>
+      <div className="flex flex-col w-full h-full items-center gap-6 px-6">
         <h1 className="text-primary-500">Enter your Seed Phrase</h1>
-        <div className="grid grid-cols-2 grid-rows-6 self-center gap-6 content-between">
+        <div className="grid grid-cols-2 grid-rows-6 self-center gap-4 content-between">
           {Array.from({ length: 12 }, (_, i) => {
             return (
               <input

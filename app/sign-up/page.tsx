@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { hexToBytes } from '@noble/hashes/utils'
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
@@ -12,23 +12,18 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
+import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
-import { useAppSelector } from '@/redux/store'
 
 const SignUp = () => {
   const { handleSubmit, register } = useForm<FieldValues>()
   const dispatch = useDispatch()
   const router = useRouter()
+
   const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
-  const userNpub = useAppSelector(({ user }) => user.publickey)
-
-  const ndk = useMemo(
-    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
-    [],
-  )
+  const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
 
   ndk.connect()
 
@@ -47,7 +42,7 @@ const SignUp = () => {
 
       const event = new NDKEvent(ndk, {
         kind: NDKKind.Metadata,
-        created_at: Math.floor(new Date().getTime() / 1000),
+        created_at: Date.now(),
         content: JSON.stringify({
           name: data.name,
           nip05: data.email,
@@ -73,19 +68,9 @@ const SignUp = () => {
     router.push(routes.chooseAppMode)
   }, [router])
 
-  useEffect(() => {
-    if (userNpub) navigateToChooseAppMode()
-  }, [
-    router,
-    /** userNpub not a dependency */
-  ])
-
   if (mnenonomic)
     return (
-      <Layout>
-        <div className="flex flex-col w-full h-full py-10 items-center ">
-          <LobstrLogo size={200} />
-        </div>
+      <Layout logoSize={200}>
         <div className="item-center flex flex-col gap-10 align-middle w-full px-10">
           <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500">
             Write down your seed phrase somewhere safe
@@ -111,10 +96,7 @@ const SignUp = () => {
     )
 
   return (
-    <Layout>
-      <div className="flex flex-col w-full h-full py-10 items-center ">
-        <LobstrLogo size={200} />
-      </div>
+    <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Create new account
