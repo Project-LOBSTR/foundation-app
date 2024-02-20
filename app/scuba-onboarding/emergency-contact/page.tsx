@@ -23,7 +23,7 @@ const EmergencyContact = () => {
     async ({ name, phoneNumber, email }: FieldValues) => {
       const event = new NDKEvent(ndk, {
         kind: NDKKind.AppSpecificData,
-        created_at: Math.floor(new Date().getTime() / 1000),
+        created_at: Date.now(),
         content: JSON.stringify({
           emergencyContact: {
             name,

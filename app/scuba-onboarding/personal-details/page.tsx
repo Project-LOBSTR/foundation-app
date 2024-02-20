@@ -24,7 +24,7 @@ const PersonalDetails = () => {
     async ({ firstName, lastName, dateOfBirth }: FieldValues) => {
       const event = new NDKEvent(ndk, {
         kind: NDKKind.AppSpecificData,
-        created_at: Math.floor(new Date().getTime() / 1000),
+        created_at: Date.now(),
         content: JSON.stringify({
           firstName,
           lastName,

@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { hexToBytes } from '@noble/hashes/utils'
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
@@ -15,15 +15,13 @@ import Layout from '@/components/Layout'
 import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
-import { useAppSelector } from '@/redux/store'
 
 const SignUp = () => {
   const { handleSubmit, register } = useForm<FieldValues>()
   const dispatch = useDispatch()
   const router = useRouter()
-  const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
-  const userNpub = useAppSelector(({ user }) => user.publickey)
+  const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
   const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
 
@@ -44,7 +42,7 @@ const SignUp = () => {
 
       const event = new NDKEvent(ndk, {
         kind: NDKKind.Metadata,
-        created_at: Math.floor(new Date().getTime() / 1000),
+        created_at: Date.now(),
         content: JSON.stringify({
           name: data.name,
           nip05: data.email,
@@ -69,13 +67,6 @@ const SignUp = () => {
   const navigateToChooseAppMode = useCallback(() => {
     router.push(routes.chooseAppMode)
   }, [router])
-
-  useEffect(() => {
-    if (userNpub) navigateToChooseAppMode()
-  }, [
-    router,
-    /** userNpub not a dependency */
-  ])
 
   if (mnenonomic)
     return (
