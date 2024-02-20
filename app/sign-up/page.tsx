@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
+import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
@@ -25,10 +25,7 @@ const SignUp = () => {
 
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
-  const ndk = useMemo(
-    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
-    [],
-  )
+  const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
 
   ndk.connect()
 

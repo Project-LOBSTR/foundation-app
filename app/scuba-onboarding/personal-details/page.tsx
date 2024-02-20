@@ -1,49 +1,26 @@
 'use client'
 
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 
-import NDK, {
-  NDKEvent,
-  NDKKind,
-  NDKNip07Signer,
-  NDKPrivateKeySigner,
-} from '@nostr-dev-kit/ndk'
+import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { routes } from '@/constants/routes'
+import { useNostr } from '@/hooks/useNostr'
 import { useAppSelector } from '@/redux/store'
 
 const PersonalDetails = () => {
   const { handleSubmit, register } = useForm<FieldValues>()
   const router = useRouter()
 
-  const { publickey, privatekey } = useAppSelector(({ user }) => {
-    return {
-      publickey: user.publickey,
-      privatekey: user.privatekey,
-    }
-  })
-
-  const ndk = useMemo(
-    () => new NDK({ explicitRelayUrls: ['wss://relay.primal.net'] }),
-    [],
-  )
-
-  ndk.connect()
-
-  const nip07signer = useMemo(() => new NDKNip07Signer(), [])
-  const signer = useMemo(
-    () => new NDKPrivateKeySigner(privatekey),
-    [privatekey],
-  )
+  const { publickey } = useAppSelector(({ user }) => user)
+  const { ndk } = useNostr()
 
   const onSubmit = useCallback(
     async ({ firstName, lastName, dateOfBirth }: FieldValues) => {
-      ndk.signer = privatekey ? signer : nip07signer
-
       const event = new NDKEvent(ndk, {
         kind: NDKKind.Metadata,
         created_at: Math.floor(new Date().getTime() / 1000),
@@ -60,7 +37,7 @@ const PersonalDetails = () => {
 
       router.push(routes.scubaOnboarding.emergencyContact)
     },
-    [ndk, nip07signer, privatekey, publickey, router, signer],
+    [ndk, publickey, router],
   )
 
   return (
