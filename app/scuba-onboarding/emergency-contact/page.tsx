@@ -7,7 +7,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import { APP_SPECIFIC_TAGS } from '@/constants/nostr'
+import { AppSpecificTags } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { useNostr } from '@/hooks/useNostr'
 import { useAppSelector } from '@/redux/store'
@@ -32,7 +32,7 @@ const EmergencyContact = () => {
           },
         }),
         pubkey: publickey,
-        tags: [['d', APP_SPECIFIC_TAGS.EMERGENCY_CONTACT]],
+        tags: [['d', AppSpecificTags.EmergencyContact]],
       })
 
       await event.publish()

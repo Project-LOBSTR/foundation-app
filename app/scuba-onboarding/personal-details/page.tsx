@@ -8,6 +8,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
+import { AppSpecificTags } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { useNostr } from '@/hooks/useNostr'
 import { useAppSelector } from '@/redux/store'
@@ -22,7 +23,7 @@ const PersonalDetails = () => {
   const onSubmit = useCallback(
     async ({ firstName, lastName, dateOfBirth }: FieldValues) => {
       const event = new NDKEvent(ndk, {
-        kind: NDKKind.Metadata,
+        kind: NDKKind.AppSpecificData,
         created_at: Math.floor(new Date().getTime() / 1000),
         content: JSON.stringify({
           firstName,
@@ -30,7 +31,7 @@ const PersonalDetails = () => {
           dateOfBirth,
         }),
         pubkey: publickey,
-        tags: [],
+        tags: [['d', AppSpecificTags.PersonalDetails]],
       })
 
       await event.publish()
