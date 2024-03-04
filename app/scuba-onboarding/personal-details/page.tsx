@@ -19,6 +19,7 @@ const personalDetailsSchema = z
   .object({
     firstName: z.string().min(1),
     lastName: z.string().min(1),
+    // TODO: validate age
     dateOfBirth: z.string().default(new Date().toISOString().split('T')[0]),
   })
   .required()
