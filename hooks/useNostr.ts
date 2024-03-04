@@ -8,7 +8,13 @@ import { useAppSelector } from '@/redux/store'
 export const useNostr = () => {
   const { privatekey } = useAppSelector(({ user }) => user)
 
-  const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
+  const ndk = useMemo(
+    () =>
+      new NDK({
+        explicitRelayUrls: relays,
+      }),
+    [],
+  )
 
   ndk.connect()
 
