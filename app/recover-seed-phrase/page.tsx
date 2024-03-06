@@ -1,23 +1,50 @@
 'use client'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { hexToBytes } from '@noble/hashes/utils'
 import { useRouter } from 'next/navigation'
 import { getPublicKey } from 'nostr-tools'
 import { privateKeyFromSeedWords } from 'nostr-tools/nip06'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { z } from 'zod'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
+const recoverPhraseSchema = z
+  .object({
+    'seed-1': z.string().min(1),
+    'seed-2': z.string().min(1),
+    'seed-3': z.string().min(1),
+    'seed-4': z.string().min(1),
+    'seed-5': z.string().min(1),
+    'seed-6': z.string().min(1),
+    'seed-7': z.string().min(1),
+    'seed-8': z.string().min(1),
+    'seed-9': z.string().min(1),
+    'seed-10': z.string().min(1),
+    'seed-11': z.string().min(1),
+    'seed-12': z.string().min(1),
+  })
+  .required()
+
+type RecoverPhraseSchema = z.infer<typeof recoverPhraseSchema>
+
 const RecoverSeedPhrase = () => {
-  const { handleSubmit, register } = useForm<FieldValues>()
+  const {
+    handleSubmit,
+    register,
+    formState: { isValid },
+  } = useForm<RecoverPhraseSchema>({
+    resolver: zodResolver(recoverPhraseSchema),
+  })
 
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = (data: RecoverPhraseSchema) => {
     const seedPhrase = Object.keys(data)
       .map((item) => item)
       .join(' ')
@@ -46,12 +73,16 @@ const RecoverSeedPhrase = () => {
                 key={i}
                 className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
                 placeholder={`${i + 1}.`}
-                {...register(`seed-${i + 1}`)}
+                {...register(`seed-${i + 1}` as keyof RecoverPhraseSchema)}
               />
             )
           })}
         </div>
-        <Button variant="primary" onClick={handleSubmit(onSubmit)}>
+        <Button
+          variant="primary"
+          disabled={!isValid}
+          onClick={handleSubmit(onSubmit)}
+        >
           Recover account
         </Button>
       </div>

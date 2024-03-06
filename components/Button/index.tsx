@@ -9,6 +9,7 @@ const button = tv({
     'rounded-2xl flex flex-1 w-full px-4 py-3 text-sm font-semibold outline-none shadow-sm justify-center',
     'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-500',
     'active:opacity-80',
+    'disabled:opacity-50',
   ],
 
   variants: {

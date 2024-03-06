@@ -2,13 +2,15 @@
 
 import { useCallback, useMemo, useState } from 'react'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { hexToBytes } from '@noble/hashes/utils'
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
 import { getPublicKey } from 'nostr-tools'
 import { generateSeedWords, privateKeyFromSeedWords } from 'nostr-tools/nip06'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { z } from 'zod'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
@@ -16,19 +18,40 @@ import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
 
+const signUpSchema = z
+  .object({
+    name: z.string().min(1),
+    email: z.string().email(),
+  })
+  .required()
+
+type SignUpSchema = z.infer<typeof signUpSchema>
+
 const SignUp = () => {
-  const { handleSubmit, register } = useForm<FieldValues>()
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
+  })
   const dispatch = useDispatch()
   const router = useRouter()
 
   const [mnenonomic, setMnenonomic] = useState<string | null>(null)
 
-  const ndk = useMemo(() => new NDK({ explicitRelayUrls: relays }), [])
+  const ndk = useMemo(
+    () =>
+      new NDK({
+        explicitRelayUrls: relays,
+      }),
+    [],
+  )
 
   ndk.connect()
 
   const generateNostrKeys = useCallback(
-    async (data: FieldValues) => {
+    async (data: SignUpSchema) => {
       const seedPhrase = generateSeedWords()
 
       const secret = privateKeyFromSeedWords(seedPhrase)
@@ -42,7 +65,7 @@ const SignUp = () => {
 
       const event = new NDKEvent(ndk, {
         kind: NDKKind.Metadata,
-        created_at: Date.now(),
+        created_at: Math.floor(new Date().getTime() / 1000),
         content: JSON.stringify({
           name: data.name,
           nip05: data.email,
@@ -102,15 +125,21 @@ const SignUp = () => {
           Create new account
         </h1>
         <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl  placeholder-primary-500 "
           placeholder="Name"
           {...register('name')}
         />
+        {errors.name && (
+          <p className="text-red-500 text-xs">{errors.name.message}</p>
+        )}
         <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
+          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl placeholder-primary-500 "
           placeholder="Email address"
           {...register('email')}
         />
+        {errors.email && (
+          <p className="text-red-500 text-xs">{errors.email.message}</p>
+        )}
         <Button variant="primary" onClick={handleSubmit(generateNostrKeys)}>
           Create NOSTR account
         </Button>
