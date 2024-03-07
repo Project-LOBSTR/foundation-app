@@ -3,14 +3,12 @@ import { useCallback } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { AppSpecificTags } from '@/constants/nostr'
-import { routes } from '@/constants/routes'
 import { useNostr } from '@/hooks/useNostr'
 import { useAppSelector } from '@/redux/store'
 
@@ -31,7 +29,6 @@ const EmergencyContact = () => {
     resolver: zodResolver(emergencyContactSchema),
   })
 
-  const router = useRouter()
   const { publickey } = useAppSelector(({ user }) => user)
   const { ndk } = useNostr()
 
@@ -52,10 +49,8 @@ const EmergencyContact = () => {
       })
 
       await event.publish()
-
-      router.push(routes.scubaOnboarding.divingExperience)
     },
-    [ndk, publickey, router],
+    [ndk, publickey],
   )
 
   return (
