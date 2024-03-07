@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lobstr Foundation App
 
-## Getting Started
+### Welcome Aboard Project LOBSTR
+*Learn Ocean Based Scuba Techniques Reliably.*
 
-First, run the development server:
+We are building a **FOSS Progressive Web App**, with the aim of revolutionising the issuance of certifications. We are building on top of [Nostr](https://nostr.how/en/what-is-nostr), an open protocol that enables truly censorship-resistant and global value-for-value publishing on the web.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technical Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Next.js](https://nextjs.org/): a powerful framework built on top of **React**, that also enables the ability to develop a monolith (Client and API in the same repo).
+- [Tailwind CSS](https://tailwindcss.com/): a utility-first CSS framework that runs on build-time, allowing for server-side rendering of components, improving the performance of our application.
+- [NDK (Nostr Dev Kit)](https://github.com/nostr-dev-kit/ndk): a development kit use to interact with Nostr Relays.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 1. Clone the repository
 
-## Learn More
+**Using SSH:** `git clone git@github.com:Project-LOBSTR/foundation-app.git`
 
-To learn more about Next.js, take a look at the following resources:
+**Using HTTPS:** `git clone https://github.com/Project-LOBSTR/foundation-app.git`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. Install dependencies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Note: please use **NPM**, as our design system package as only currently published there.
 
-## Deploy on Vercel
+`npm install`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. Run the project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Development build**: `npm run dev`
+**Production build**: `npm run start`
+
+### Testing:
+
+`npm run test`
+
+## How to Contribute
+
+If you would like to help us out, please reach out to one of our contributors:
+
+[Ben Gunn](https://github.com/bengunn)
+[Matt Wilson](https://github.com/mattwilson02)
+[Ricardo Brito](https://github.com/RicardoBrito1938)
