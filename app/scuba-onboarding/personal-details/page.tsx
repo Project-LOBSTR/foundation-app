@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
+import * as Switch from '@radix-ui/react-switch'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,18 +16,20 @@ import { routes } from '@/constants/routes'
 import { useNostr } from '@/hooks/useNostr'
 import { useAppSelector } from '@/redux/store'
 
-const personalDetailsSchema = z
-  .object({
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    // TODO: validate age
-    dateOfBirth: z.string().default(new Date().toISOString().split('T')[0]),
-  })
-  .required()
+const personalDetailsSchema = z.object({
+  firstName: z.string().min(1),
+  lastName: z.string().min(1),
+  // TODO: validate age
+  dateOfBirth: z.string().default(new Date().toISOString().split('T')[0]),
+  numberOfDives: z.string().optional(),
+  certificationLevel: z.string().optional(),
+})
 
 type PersonalDetailsSchema = z.infer<typeof personalDetailsSchema>
 
 const PersonalDetails = () => {
+  const [hasExperience, setHasExperience] = useState(false)
+
   const {
     handleSubmit,
     register,
@@ -35,13 +38,20 @@ const PersonalDetails = () => {
     resolver: zodResolver(personalDetailsSchema),
   })
 
+  console.log(isValid)
   const router = useRouter()
 
   const { publickey } = useAppSelector(({ user }) => user)
   const { ndk } = useNostr()
 
   const onSubmit = useCallback(
-    async ({ firstName, lastName, dateOfBirth }: PersonalDetailsSchema) => {
+    async ({
+      firstName,
+      lastName,
+      dateOfBirth,
+      certificationLevel,
+      numberOfDives,
+    }: PersonalDetailsSchema) => {
       const event = new NDKEvent(ndk, {
         kind: NDKKind.AppSpecificData,
         created_at: Math.floor(new Date().getTime() / 1000),
@@ -49,6 +59,8 @@ const PersonalDetails = () => {
           firstName,
           lastName,
           dateOfBirth,
+          certificationLevel: hasExperience ? certificationLevel : 0,
+          numberOfDives: hasExperience ? numberOfDives : 0,
         }),
         pubkey: publickey,
         tags: [['d', AppSpecificTags.PersonalDetails]],
@@ -58,7 +70,7 @@ const PersonalDetails = () => {
 
       router.push(routes.scubaOnboarding.emergencyContact)
     },
-    [ndk, publickey, router],
+    [hasExperience, ndk, publickey, router],
   )
 
   return (
@@ -91,6 +103,31 @@ const PersonalDetails = () => {
         />
         {errors.dateOfBirth && (
           <p className="text-red-500 text-sm">{errors.dateOfBirth.message}</p>
+        )}
+        <div className="flex flex-row gap-2 items-center">
+          <Switch.Root
+            onCheckedChange={(checked) => setHasExperience(checked)}
+            className='flex flex-row items-center h-6 w-11 rounded-xl p-0.5 data-[state="checked"]:justify-end data-[disabled]:bg-gray-400 data-[state="checked"]:bg-primary-500 data-[state="unchecked"]:bg-gray-200'
+          >
+            <Switch.Thumb className="rounded-xl bg-white drop-shadow-sm data-[disabled]:bg-neutral-20 h-5 w-5" />
+          </Switch.Root>
+          <p className="text-black text-sm">
+            Do you have any previous diving experience?
+          </p>
+        </div>
+        {hasExperience && (
+          <div className=" flex flex-row gap-2  w-full">
+            <input
+              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl text-sm placeholder-primary-500"
+              placeholder="Number of dives"
+              {...register('numberOfDives')}
+            />
+            <input
+              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl text-sm placeholder-primary-500"
+              placeholder="Certification Level"
+              {...register('certificationLevel')}
+            />
+          </div>
         )}
         <Button
           variant="primary"

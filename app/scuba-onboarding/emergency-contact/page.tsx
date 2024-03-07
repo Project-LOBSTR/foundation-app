@@ -1,5 +1,5 @@
 'use client'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
@@ -53,10 +53,22 @@ const EmergencyContact = () => {
 
       await event.publish()
 
-      router.push(routes.scubaOnboarding.divingExperience)
+      // router.push(routes.scubaOnboarding.divingExperience)
     },
     [ndk, publickey, router],
   )
+
+  useEffect(() => {
+    async function fetch() {
+      const events = await ndk.fetchEvents({
+        authors: [
+          'd6471ee4618c1b4e8f7f6b4fbbe95ab8312ef6ed4e0c55191c8c4f6ec6a284ee',
+        ],
+      })
+      console.log(events)
+    }
+    fetch()
+  }, [ndk, publickey])
 
   return (
     <Layout logoSize={200}>
