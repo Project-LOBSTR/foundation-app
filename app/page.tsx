@@ -6,7 +6,6 @@ import { Button } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
 
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
 import { useAppSelector } from '@/redux/store'
 
