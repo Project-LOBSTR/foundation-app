@@ -34,6 +34,12 @@ Note: please use **NPM**, as our design system package as only currently publish
 
 `npm run test`
 
+## Design System
+
+We have written a [Design System](https://project-lobstr.github.io/design-system/) containing re-usable React Components, implemented using Pattern Composition. Documentation is provided on Storybook for usage of each component.
+
+`@lobstr/react` is also free and open-source, available on [Github](https://github.com/Project-LOBSTR/design-system)
+
 ## How to Contribute
 
 If you would like to help us out, please reach out to one of our contributors:
