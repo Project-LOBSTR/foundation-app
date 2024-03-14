@@ -2,11 +2,10 @@
 
 import { useEffect } from 'react'
 
+import { Button } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
-import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
 import { useAppSelector } from '@/redux/store'
 
@@ -40,11 +39,8 @@ export default function Home() {
   ]
 
   return (
-    <Layout canGoBack={false}>
-      <div className="flex flex-col w-full h-full py-20 items-center bg-gradient-lobstr rounded-b-2xl">
-        <LobstrLogo size={300} />
-      </div>
-      <div className="my-10 flex flex-col items-center gap-5  px-10">
+    <Layout canGoBack={false} logoSize={300}>
+      <div className="flex flex-col items-center gap-5 px-10">
         <div>
           <h1 className="text-3xl  font-semibold text-center font-heading text-black">
             Welcome to LOBSTR
@@ -54,14 +50,14 @@ export default function Home() {
           </p>
         </div>
         {buttons.map(({ id, buttonText, onClick }) => (
-          <div key={id} className="text-center flex w-full">
-            <Button
+          <div key={id} className="flex w-full">
+            <Button.Root
+              className="w-full justify-center"
               variant="primary"
               onClick={onClick}
-              className="w-full sm:w-auto"
             >
               {buttonText}
-            </Button>
+            </Button.Root>
           </div>
         ))}
       </div>

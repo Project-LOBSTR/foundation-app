@@ -1,4 +1,4 @@
-# Design System
+# Lobstr Foundation App
 
 ## What type of PR is this?
 
@@ -21,7 +21,7 @@
 
 - [ ] 📜 README.md
 - [ ] 📕 Storybook
-- [ ] 🙅‍♂️ No documentation neeeded
+- [ ] 🙅‍♂️ No documentation needed
 
 ### Have you written tests to cover your code?
 - [ ] ✅ Yes 
