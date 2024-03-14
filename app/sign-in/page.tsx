@@ -45,6 +45,11 @@ const SignIn = () => {
     }
   }, [dispatch, ndk, nsec, router])
 
+  const isPWA = useMemo(
+    () => window.matchMedia('(display-mode: standalone)').matches,
+    [],
+  )
+
   return (
     <Layout logoSize={300}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
@@ -52,13 +57,15 @@ const SignIn = () => {
           Login to LOBSTR
         </h1>
         {/** TODO: fixed width */}
-        <div
-          className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
-          onClick={newLogin}
-        >
-          <FaFileSignature color="#3A167F" />
-          <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
-        </div>
+        {!isPWA && (
+          <div
+            className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
+            onClick={newLogin}
+          >
+            <FaFileSignature color="#3A167F" />
+            <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
+          </div>
+        )}
 
         <input
           className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
