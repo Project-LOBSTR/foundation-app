@@ -1,4 +1,4 @@
-# Design System
+# Lobstr Foundation App
 
 ## What type of PR is this?
 
