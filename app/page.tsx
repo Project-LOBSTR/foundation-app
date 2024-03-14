@@ -2,9 +2,9 @@
 
 import { useEffect } from 'react'
 
+import { Button } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
@@ -54,14 +54,10 @@ export default function Home() {
           </p>
         </div>
         {buttons.map(({ id, buttonText, onClick }) => (
-          <div key={id} className="text-center flex w-full">
-            <Button
-              variant="primary"
-              onClick={onClick}
-              className="w-full sm:w-auto"
-            >
+          <div key={id} className="justify-center flex w-full">
+            <Button.Root variant="primary" onClick={onClick}>
               {buttonText}
-            </Button>
+            </Button.Root>
           </div>
         ))}
       </div>
