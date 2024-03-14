@@ -1,13 +1,10 @@
 import { PropsWithChildren } from 'react'
 
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 
 import './globals.css'
 import { Providers } from './providers'
 import '@lobstr/react/dist/output.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,7 +17,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={inter.className}>
+      <body className="w-full items-center flex flex-col bg-white">
         <Providers>{children}</Providers>
       </body>
     </html>
