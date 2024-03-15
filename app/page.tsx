@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-import { Button } from '@lobstr/react'
+import { Button, Heading, Text } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
 
 import Layout from '@/components/Layout'
@@ -40,26 +40,27 @@ export default function Home() {
 
   return (
     <Layout canGoBack={false} logoSize={300}>
-      <div className="flex flex-col items-center gap-5 px-10">
-        <div>
-          <h1 className="text-3xl  font-semibold text-center font-heading text-black">
+      <div className="flex flex-col items-center gap-4 px-10">
+        <div className="gap-2 flex flex-col">
+          <Heading className="text-center" size="h4">
             Welcome to LOBSTR
-          </h1>
-          <p className="text-black font-normal text-center font-body">
+          </Heading>
+          <Text className="text-center">
             Create your NOSTR account or log in with your existing account
-          </p>
+          </Text>
         </div>
-        {buttons.map(({ id, buttonText, onClick }) => (
-          <div key={id} className="flex w-full">
+        <div className="flex w-full flex-col gap-2">
+          {buttons.map(({ id, buttonText, onClick }) => (
             <Button.Root
+              key={id}
               className="w-full justify-center"
               variant="primary"
               onClick={onClick}
             >
               {buttonText}
             </Button.Root>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </Layout>
   )
