@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TextInput } from '@lobstr/react'
 import { hexToBytes } from '@noble/hashes/utils'
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
@@ -124,11 +125,9 @@ const SignUp = () => {
         <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
           Create new account
         </h1>
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl  placeholder-primary-500 "
-          placeholder="Name"
-          {...register('name')}
-        />
+        <TextInput.Root size="sm" className="w-full">
+          <TextInput.Control placeholder="Name" {...register('name')} />
+        </TextInput.Root>
         {errors.name && (
           <p className="text-red-500 text-xs">{errors.name.message}</p>
         )}
