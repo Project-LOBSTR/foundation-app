@@ -91,6 +91,7 @@ const ChooseAppMode = () => {
           <div className="pb-8">
             {/* TODO: Proper disable class and styles for button */}
             <Button.Root
+              className="w-full justify-center"
               size="md"
               variant="primary"
               onClick={onSubmit}

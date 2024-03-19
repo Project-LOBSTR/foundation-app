@@ -79,7 +79,7 @@ const PersonalDetails = () => {
         <Heading className="font-semibold text-center font-heading text-primary-500 text-2xl mb-4">
           Personal details
         </Heading>
-        <TextInput.Root size="sm" className="w-full rounded-xl">
+        <TextInput.Root size="sm">
           <TextInput.Control
             placeholder="First Name"
             {...register('firstName')}
@@ -91,7 +91,7 @@ const PersonalDetails = () => {
           </Text>
         )}
 
-        <TextInput.Root size="sm" className="w-full rounded-xl">
+        <TextInput.Root size="sm">
           <TextInput.Control
             placeholder="Last Name"
             {...register('lastName')}
@@ -102,7 +102,7 @@ const PersonalDetails = () => {
             {errors.lastName.message}
           </Text>
         )}
-        <TextInput.Root size="sm" className="w-full rounded-xl">
+        <TextInput.Root size="sm">
           <TextInput.Control
             type="date"
             defaultValue={new Date().toISOString().split('T')[0]}
@@ -127,19 +127,13 @@ const PersonalDetails = () => {
         </div>
         {hasExperience && (
           <div className=" flex flex-row gap-2  w-full">
-            <TextInput.Root
-              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl placeholder-primary-500"
-              size="sm"
-            >
+            <TextInput.Root size="sm">
               <TextInput.Control
                 placeholder="Number of dives"
                 {...register('numberOfDives')}
               />
             </TextInput.Root>
-            <TextInput.Root
-              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl placeholder-primary-500"
-              size="sm"
-            >
+            <TextInput.Root size="sm">
               <TextInput.Control
                 placeholder="Certification Level"
                 {...register('certificationLevel')}
@@ -148,6 +142,7 @@ const PersonalDetails = () => {
           </div>
         )}
         <Button.Root
+          className="w-full justify-center"
           size="md"
           variant="primary"
           disabled={!isValid}

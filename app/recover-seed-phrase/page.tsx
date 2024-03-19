@@ -69,21 +69,17 @@ const RecoverSeedPhrase = () => {
         <div className="grid grid-cols-2 grid-rows-6 self-center gap-4 content-between">
           {Array.from({ length: 12 }, (_, i) => {
             return (
-              <TextInput.Root
-                key={i}
-                className="focus: outline-none h-12 px-2 text-black rounded-xl placeholder-primary-500"
-                size="sm"
-              >
+              <TextInput.Root key={i} size="sm">
                 <TextInput.Control
                   placeholder={`${i + 1}.`}
                   {...register(`seed-${i + 1}` as keyof RecoverPhraseSchema)}
                 />
-                /
               </TextInput.Root>
             )
           })}
         </div>
         <Button.Root
+          className="w-full justify-center"
           size="md"
           variant="primary"
           disabled={!isValid}

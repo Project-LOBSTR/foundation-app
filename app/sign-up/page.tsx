@@ -116,6 +116,7 @@ const SignUp = () => {
             })}
           </div>
           <Button.Root
+            className="w-full justify-center"
             size="md"
             variant="primary"
             onClick={navigateToChooseAppMode}
@@ -129,10 +130,8 @@ const SignUp = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
-        <Heading className="font-semibold text-center font-heading text-primary-500 mb-10">
-          Create new account
-        </Heading>
-        <TextInput.Root size="sm" className="w-full">
+        <Heading size="h1">Create new account</Heading>
+        <TextInput.Root size="sm">
           <TextInput.Control placeholder="Name" {...register('name')} />
         </TextInput.Root>
         {errors.name && (
@@ -140,7 +139,7 @@ const SignUp = () => {
             {errors.name.message}
           </Text>
         )}
-        <TextInput.Root className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl placeholder-primary-500">
+        <TextInput.Root>
           <TextInput.Control
             placeholder="Email address"
             {...register('email')}
@@ -152,6 +151,7 @@ const SignUp = () => {
           </Text>
         )}
         <Button.Root
+          className="w-full justify-center"
           size="md"
           variant="primary"
           onClick={handleSubmit(generateNostrKeys)}

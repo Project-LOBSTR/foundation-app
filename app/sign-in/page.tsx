@@ -69,10 +69,7 @@ const SignIn = () => {
           </div>
         )}
 
-        <TextInput.Root
-          className="focus: outline-none h-12 px-2 text-black rounded-xl placeholder-primary-500 "
-          size="sm"
-        >
+        <TextInput.Root size="sm">
           <TextInput.Control
             onChange={(e) => setNsec(e.target.value)}
             placeholder="Enter your nsec"
@@ -80,7 +77,12 @@ const SignIn = () => {
           />
         </TextInput.Root>
         {nsec?.length && (
-          <Button.Root size="md" variant="primary" onClick={newLogin}>
+          <Button.Root
+            className="w-full justify-center"
+            size="md"
+            variant="primary"
+            onClick={newLogin}
+          >
             Use with nsec
           </Button.Root>
         )}

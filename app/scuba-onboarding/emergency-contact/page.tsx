@@ -59,38 +59,20 @@ const EmergencyContact = () => {
         <Heading className=" text-2xl font-semibold text-center font-heading text-primary-500 mb-2">
           Emergency contact
         </Heading>
-        <TextInput.Root
-          className="focus: outline-none h-12 px-2 text-black rounded-xl placeholder-primary-500"
-          size="sm"
-        >
-          <TextInput.Control
-            placeholder="Name"
-            {...register('name')}
-          ></TextInput.Control>
+        <TextInput.Root size="sm">
+          <TextInput.Control placeholder="Name" {...register('name')} />
         </TextInput.Root>
-        {errors.name && (
-          <Text className="text-red-500" size="sm">
-            {errors.name.message}
-          </Text>
-        )}
-        <TextInput.Root
-          className="focus: outline-none  h-12 px-2 text-black rounded-xl  placeholder-primary-500"
-          size="sm"
-        >
+        {errors.name && <Text size="sm">{errors.name.message}</Text>}
+        <TextInput.Root size="sm">
           <TextInput.Control
             placeholder="Phone number"
             {...register('phoneNumber')}
           />
         </TextInput.Root>
         {errors.phoneNumber && (
-          <Text className="text-red-500" size="sm">
-            {errors.phoneNumber.message}
-          </Text>
+          <Text size="sm">{errors.phoneNumber.message}</Text>
         )}
-        <TextInput.Root
-          className="focus: outline-none  h-12 px-2 text-black rounded-xl placeholder-primary-500"
-          size="sm"
-        >
+        <TextInput.Root size="sm">
           <TextInput.Control
             type="email"
             placeholder="Email"
@@ -103,6 +85,7 @@ const EmergencyContact = () => {
           </Text>
         )}
         <Button.Root
+          className="w-full justify-center"
           size="md"
           variant="primary"
           disabled={!isValid}
