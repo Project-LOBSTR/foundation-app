@@ -79,7 +79,7 @@ const PersonalDetails = () => {
         <Heading className="font-semibold text-center font-heading text-primary-500 text-2xl mb-4">
           Personal details
         </Heading>
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             placeholder="First Name"
             {...register('firstName')}
@@ -91,7 +91,7 @@ const PersonalDetails = () => {
           </Text>
         )}
 
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             placeholder="Last Name"
             {...register('lastName')}
@@ -102,7 +102,7 @@ const PersonalDetails = () => {
             {errors.lastName.message}
           </Text>
         )}
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             type="date"
             defaultValue={new Date().toISOString().split('T')[0]}
@@ -127,13 +127,13 @@ const PersonalDetails = () => {
         </div>
         {hasExperience && (
           <div className=" flex flex-row gap-2  w-full">
-            <TextInput.Root size="sm">
+            <TextInput.Root size="sm" className="w-full">
               <TextInput.Control
                 placeholder="Number of dives"
                 {...register('numberOfDives')}
               />
             </TextInput.Root>
-            <TextInput.Root size="sm">
+            <TextInput.Root size="sm" className="w-full">
               <TextInput.Control
                 placeholder="Certification Level"
                 {...register('certificationLevel')}

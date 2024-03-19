@@ -63,13 +63,16 @@ const SignIn = () => {
             onClick={newLogin}
           >
             <FaFileSignature color="#3A167F" />
-            <TextInput.Root className="text-black font-semibold" size="sm">
+            <TextInput.Root
+              className="text-black font-semibold w-full"
+              size="sm"
+            >
               Use NOSTR signer
             </TextInput.Root>
           </div>
         )}
 
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             onChange={(e) => setNsec(e.target.value)}
             placeholder="Enter your nsec"

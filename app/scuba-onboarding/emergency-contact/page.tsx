@@ -59,20 +59,26 @@ const EmergencyContact = () => {
         <Heading className=" text-2xl font-semibold text-center font-heading text-primary-500 mb-2">
           Emergency contact
         </Heading>
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control placeholder="Name" {...register('name')} />
         </TextInput.Root>
-        {errors.name && <Text size="sm">{errors.name.message}</Text>}
-        <TextInput.Root size="sm">
+        {errors.name && (
+          <Text className="text-red-500" size="sm">
+            {errors.name.message}
+          </Text>
+        )}
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             placeholder="Phone number"
             {...register('phoneNumber')}
           />
         </TextInput.Root>
         {errors.phoneNumber && (
-          <Text size="sm">{errors.phoneNumber.message}</Text>
+          <Text className="text-red-500" size="sm">
+            {errors.phoneNumber.message}
+          </Text>
         )}
-        <TextInput.Root size="sm">
+        <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
             type="email"
             placeholder="Email"

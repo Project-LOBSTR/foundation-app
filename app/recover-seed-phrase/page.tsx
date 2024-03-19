@@ -69,8 +69,9 @@ const RecoverSeedPhrase = () => {
         <div className="grid grid-cols-2 grid-rows-6 self-center gap-4 content-between">
           {Array.from({ length: 12 }, (_, i) => {
             return (
-              <TextInput.Root key={i} size="sm">
+              <TextInput.Root key={i} size="sm" className="w-full">
                 <TextInput.Control
+                  className="w-full"
                   placeholder={`${i + 1}.`}
                   {...register(`seed-${i + 1}` as keyof RecoverPhraseSchema)}
                 />

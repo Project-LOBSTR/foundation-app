@@ -130,8 +130,8 @@ const SignUp = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
-        <Heading size="h1">Create new account</Heading>
-        <TextInput.Root size="sm">
+        <Heading size="h2">Create new account</Heading>
+        <TextInput.Root size="md" className="w-full">
           <TextInput.Control placeholder="Name" {...register('name')} />
         </TextInput.Root>
         {errors.name && (
@@ -139,7 +139,7 @@ const SignUp = () => {
             {errors.name.message}
           </Text>
         )}
-        <TextInput.Root>
+        <TextInput.Root size="md" className="w-full">
           <TextInput.Control
             placeholder="Email address"
             {...register('email')}
