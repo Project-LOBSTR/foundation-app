@@ -3,13 +3,13 @@
 import { useCallback, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Heading, TextInput, Text } from '@lobstr/react'
 import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
 import * as Switch from '@radix-ui/react-switch'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { AppSpecificTags } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
@@ -76,33 +76,43 @@ const PersonalDetails = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-4 align-middle w-full px-10">
-        <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-2">
+        <Heading className="font-semibold text-center font-heading text-primary-500 text-2xl mb-4">
           Personal details
-        </h1>
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-          placeholder="First Name"
-          {...register('firstName')}
-        />
+        </Heading>
+        <TextInput.Root size="sm" className="w-full rounded-xl">
+          <TextInput.Control
+            placeholder="First Name"
+            {...register('firstName')}
+          />
+        </TextInput.Root>
         {errors.firstName && (
-          <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.firstName.message}
+          </Text>
         )}
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-          placeholder="Last Name"
-          {...register('lastName')}
-        />
+
+        <TextInput.Root size="sm" className="w-full rounded-xl">
+          <TextInput.Control
+            placeholder="Last Name"
+            {...register('lastName')}
+          />
+        </TextInput.Root>
         {errors.lastName && (
-          <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.lastName.message}
+          </Text>
         )}
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500"
-          type="date"
-          defaultValue={new Date().toISOString().split('T')[0]}
-          {...register('dateOfBirth')}
-        />
+        <TextInput.Root size="sm" className="w-full rounded-xl">
+          <TextInput.Control
+            type="date"
+            defaultValue={new Date().toISOString().split('T')[0]}
+            {...register('dateOfBirth')}
+          />
+        </TextInput.Root>
         {errors.dateOfBirth && (
-          <p className="text-red-500 text-sm">{errors.dateOfBirth.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.dateOfBirth.message}
+          </Text>
         )}
         <div className="flex flex-row gap-2 items-center">
           <Switch.Root
@@ -111,31 +121,40 @@ const PersonalDetails = () => {
           >
             <Switch.Thumb className="rounded-xl bg-white drop-shadow-sm data-[disabled]:bg-neutral-20 h-5 w-5" />
           </Switch.Root>
-          <p className="text-black text-sm">
+          <Text className="text-black" size="sm">
             Do you have any previous diving experience?
-          </p>
+          </Text>
         </div>
         {hasExperience && (
           <div className=" flex flex-row gap-2  w-full">
-            <input
-              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl text-sm placeholder-primary-500"
-              placeholder="Number of dives"
-              {...register('numberOfDives')}
-            />
-            <input
-              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl text-sm placeholder-primary-500"
-              placeholder="Certification Level"
-              {...register('certificationLevel')}
-            />
+            <TextInput.Root
+              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl placeholder-primary-500"
+              size="sm"
+            >
+              <TextInput.Control
+                placeholder="Number of dives"
+                {...register('numberOfDives')}
+              />
+            </TextInput.Root>
+            <TextInput.Root
+              className="focus: outline-none bg-gray-100 h-12 w-full  px-2 text-black rounded-xl placeholder-primary-500"
+              size="sm"
+            >
+              <TextInput.Control
+                placeholder="Certification Level"
+                {...register('certificationLevel')}
+              />
+            </TextInput.Root>
           </div>
         )}
-        <Button
+        <Button.Root
+          size="md"
           variant="primary"
           disabled={!isValid}
           onClick={handleSubmit(onSubmit)}
         >
           Continue
-        </Button>
+        </Button.Root>
       </div>
     </Layout>
   )

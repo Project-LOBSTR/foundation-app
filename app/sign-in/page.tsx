@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState } from 'react'
 
+import { Heading, TextInput, Button, Text } from '@lobstr/react'
 import { bytesToHex } from '@noble/hashes/utils'
 import NDK, { NDKNip07Signer, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
@@ -9,7 +10,6 @@ import { nip19 } from 'nostr-tools'
 import { FaFileSignature } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
@@ -53,9 +53,9 @@ const SignIn = () => {
   return (
     <Layout logoSize={300}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
-        <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
+        <Heading className="text-center" size="h4">
           Login to LOBSTR
-        </h1>
+        </Heading>
         {/** TODO: fixed width */}
         {!isPWA && (
           <div
@@ -63,28 +63,34 @@ const SignIn = () => {
             onClick={newLogin}
           >
             <FaFileSignature color="#3A167F" />
-            <p className="text-black font-semibold text-xs">Use NOSTR signer</p>
+            <TextInput.Root className="text-black font-semibold" size="sm">
+              Use NOSTR signer
+            </TextInput.Root>
           </div>
         )}
 
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-          onChange={(e) => setNsec(e.target.value)}
-          placeholder="Enter your nsec"
-          type="password"
-        />
+        <TextInput.Root
+          className="focus: outline-none h-12 px-2 text-black rounded-xl placeholder-primary-500 "
+          size="sm"
+        >
+          <TextInput.Control
+            onChange={(e) => setNsec(e.target.value)}
+            placeholder="Enter your nsec"
+            type="password"
+          />
+        </TextInput.Root>
         {nsec?.length && (
-          <Button variant="primary" onClick={newLogin}>
+          <Button.Root size="md" variant="primary" onClick={newLogin}>
             Use with nsec
-          </Button>
+          </Button.Root>
         )}
         <div
           className="py-2"
           onClick={() => router.push(routes.recoverSeedPhrase)}
         >
-          <p className="text-primary-500 text-xs">
+          <Text className="text-primary-500" size="sm">
             Recover account with seed phrase
-          </p>
+          </Text>
         </div>
       </div>
     </Layout>

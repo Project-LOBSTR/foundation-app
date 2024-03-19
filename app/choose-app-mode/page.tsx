@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 
+import { Button } from '@lobstr/react'
 import Image, { StaticImageData } from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
@@ -8,7 +9,6 @@ import { useDispatch } from 'react-redux'
 import Logo from '@/assets/lobstr-logo.png'
 // TODO: images should be imported from via https and not from local
 import subaImage from '@/assets/scuba.webp'
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import LobstrLogo from '@/components/LobstrLogo'
 import { routes } from '@/constants/routes'
@@ -90,13 +90,14 @@ const ChooseAppMode = () => {
           </div>
           <div className="pb-8">
             {/* TODO: Proper disable class and styles for button */}
-            <Button
+            <Button.Root
+              size="md"
               variant="primary"
               onClick={onSubmit}
               disabled={!selectedMode}
             >
               Continue
-            </Button>
+            </Button.Root>
           </div>
         </div>
       </div>
