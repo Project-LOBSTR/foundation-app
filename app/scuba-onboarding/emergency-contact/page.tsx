@@ -2,11 +2,11 @@
 import { useCallback } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Heading, Button, Text, TextInput } from '@lobstr/react'
 import { NDKEvent, NDKKind } from '@nostr-dev-kit/ndk'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { AppSpecificTags } from '@/constants/nostr'
 import { useNostr } from '@/hooks/useNostr'
@@ -56,41 +56,49 @@ const EmergencyContact = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-4 align-middle w-full px-10">
-        <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-2">
+        <Heading className=" text-2xl font-semibold text-center font-heading text-primary-500 mb-2">
           Emergency contact
-        </h1>
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-          placeholder="Name"
-          {...register('name')}
-        />
+        </Heading>
+        <TextInput.Root size="sm" className="w-full">
+          <TextInput.Control placeholder="Name" {...register('name')} />
+        </TextInput.Root>
         {errors.name && (
-          <p className="text-red-500 text-sm">{errors.name.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.name.message}
+          </Text>
         )}
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-          placeholder="Phone number"
-          {...register('phoneNumber')}
-        />
+        <TextInput.Root size="sm" className="w-full">
+          <TextInput.Control
+            placeholder="Phone number"
+            {...register('phoneNumber')}
+          />
+        </TextInput.Root>
         {errors.phoneNumber && (
-          <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.phoneNumber.message}
+          </Text>
         )}
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500"
-          type="email"
-          placeholder="Email"
-          {...register('email')}
-        />
+        <TextInput.Root size="sm" className="w-full">
+          <TextInput.Control
+            type="email"
+            placeholder="Email"
+            {...register('email')}
+          />
+        </TextInput.Root>
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.email.message}
+          </Text>
         )}
-        <Button
+        <Button.Root
+          className="w-full justify-center"
+          size="md"
           variant="primary"
           disabled={!isValid}
           onClick={handleSubmit(onSubmit)}
         >
           Continue
-        </Button>
+        </Button.Root>
       </div>
     </Layout>
   )

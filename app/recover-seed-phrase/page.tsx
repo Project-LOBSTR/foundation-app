@@ -1,5 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Heading, Button, TextInput } from '@lobstr/react'
 import { hexToBytes } from '@noble/hashes/utils'
 import { useRouter } from 'next/navigation'
 import { getPublicKey } from 'nostr-tools'
@@ -8,7 +9,6 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { z } from 'zod'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { routes } from '@/constants/routes'
 import { login } from '@/redux/features/user'
@@ -65,26 +65,29 @@ const RecoverSeedPhrase = () => {
   return (
     <Layout canGoBack logoSize={200}>
       <div className="flex flex-col w-full h-full items-center gap-6 px-6">
-        <h1 className="text-primary-500">Enter your Seed Phrase</h1>
+        <Heading className="text-primary-500">Enter your Seed Phrase</Heading>
         <div className="grid grid-cols-2 grid-rows-6 self-center gap-4 content-between">
           {Array.from({ length: 12 }, (_, i) => {
             return (
-              <input
-                key={i}
-                className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl text-sm placeholder-primary-500 "
-                placeholder={`${i + 1}.`}
-                {...register(`seed-${i + 1}` as keyof RecoverPhraseSchema)}
-              />
+              <TextInput.Root key={i} size="sm" className="w-full">
+                <TextInput.Control
+                  className="w-full"
+                  placeholder={`${i + 1}.`}
+                  {...register(`seed-${i + 1}` as keyof RecoverPhraseSchema)}
+                />
+              </TextInput.Root>
             )
           })}
         </div>
-        <Button
+        <Button.Root
+          className="w-full justify-center"
+          size="md"
           variant="primary"
           disabled={!isValid}
           onClick={handleSubmit(onSubmit)}
         >
           Recover account
-        </Button>
+        </Button.Root>
       </div>
     </Layout>
   )

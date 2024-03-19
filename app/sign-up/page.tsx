@@ -3,7 +3,7 @@
 import { useCallback, useMemo, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TextInput } from '@lobstr/react'
+import { Heading, TextInput, Button, Text } from '@lobstr/react'
 import { hexToBytes } from '@noble/hashes/utils'
 import NDK, { NDKEvent, NDKKind, NDKPrivateKeySigner } from '@nostr-dev-kit/ndk'
 import { useRouter } from 'next/navigation'
@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { z } from 'zod'
 
-import { Button } from '@/components/Button'
 import Layout from '@/components/Layout'
 import { relays } from '@/constants/nostr'
 import { routes } from '@/constants/routes'
@@ -96,25 +95,34 @@ const SignUp = () => {
     return (
       <Layout logoSize={200}>
         <div className="item-center flex flex-col gap-10 align-middle w-full px-10">
-          <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500">
+          <Heading
+            className=" font-semibold text-center font-heading text-primary-500"
+            size="h3"
+          >
             Write down your seed phrase somewhere safe
-          </h1>
+          </Heading>
 
           <div className="flex flex-row flex-wrap gap-2 justify-center">
             {seedPhraseSplit?.map((word, index) => {
               return (
-                <p
-                  className="text-black bg-gray-200 px-3 rounded-sm"
+                <Text
+                  className="text-black bg-gray-200 px-3 rounded"
+                  size="sm"
                   key={index}
                 >
                   {transformCaption(word, index)}
-                </p>
+                </Text>
               )
             })}
           </div>
-          <Button variant="primary" onClick={navigateToChooseAppMode}>
+          <Button.Root
+            className="w-full justify-center"
+            size="md"
+            variant="primary"
+            onClick={navigateToChooseAppMode}
+          >
             Continue
-          </Button>
+          </Button.Root>
         </div>
       </Layout>
     )
@@ -122,26 +130,34 @@ const SignUp = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
-        <h1 className="text-2xl  font-semibold text-center font-heading text-primary-500 mb-10">
-          Create new account
-        </h1>
-        <TextInput.Root size="sm" className="w-full">
+        <Heading size="h2">Create new account</Heading>
+        <TextInput.Root size="md" className="w-full">
           <TextInput.Control placeholder="Name" {...register('name')} />
         </TextInput.Root>
         {errors.name && (
-          <p className="text-red-500 text-xs">{errors.name.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.name.message}
+          </Text>
         )}
-        <input
-          className="focus: outline-none bg-gray-100 h-12 px-2 text-black rounded-xl placeholder-primary-500 "
-          placeholder="Email address"
-          {...register('email')}
-        />
+        <TextInput.Root size="md" className="w-full">
+          <TextInput.Control
+            placeholder="Email address"
+            {...register('email')}
+          />
+        </TextInput.Root>
         {errors.email && (
-          <p className="text-red-500 text-xs">{errors.email.message}</p>
+          <Text className="text-red-500" size="sm">
+            {errors.email.message}
+          </Text>
         )}
-        <Button variant="primary" onClick={handleSubmit(generateNostrKeys)}>
+        <Button.Root
+          className="w-full justify-center"
+          size="md"
+          variant="primary"
+          onClick={handleSubmit(generateNostrKeys)}
+        >
           Create NOSTR account
-        </Button>
+        </Button.Root>
       </div>
     </Layout>
   )
