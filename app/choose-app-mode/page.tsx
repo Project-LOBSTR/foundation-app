@@ -48,7 +48,7 @@ const ChooseAppMode = () => {
 
     dispatch(setMode({ appMode: selectedMode }))
     // TODO: navigate dynamically
-    router.push(routes.scubaOnboarding.personalDetails)
+    router.push(routes.personalDetails)
   }, [dispatch, router, selectedMode])
 
   useEffect(() => {

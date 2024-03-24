@@ -41,7 +41,7 @@ const SignIn = () => {
         }),
       )
       // TODO: depends if they've onboarded on lobstr already
-      router.push(routes.chooseAppMode)
+      router.push(routes.personalDetails)
     }
   }, [dispatch, ndk, nsec, router])
 

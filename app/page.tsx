@@ -22,7 +22,7 @@ export default function Home() {
   const userNpub = useAppSelector(({ user }) => user.publickey)
 
   useEffect(() => {
-    if (userNpub) router.push(routes.chooseAppMode)
+    if (userNpub) router.push(routes.personalDetails)
   }, [router, userNpub])
 
   const buttons: ButtonProps[] = [

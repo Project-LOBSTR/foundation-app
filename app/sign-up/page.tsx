@@ -87,10 +87,6 @@ const SignUp = () => {
     return `${index + 1}. ${word}`
   }
 
-  const navigateToChooseAppMode = useCallback(() => {
-    router.push(routes.chooseAppMode)
-  }, [router])
-
   if (mnenonomic)
     return (
       <Layout logoSize={200}>
@@ -119,7 +115,7 @@ const SignUp = () => {
             className="w-full justify-center"
             size="md"
             variant="primary"
-            onClick={navigateToChooseAppMode}
+            onClick={() => router.push(routes.personalDetails)}
           >
             Continue
           </Button.Root>
@@ -132,7 +128,7 @@ const SignUp = () => {
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
         <Heading size="h2">Create new account</Heading>
         <TextInput.Root size="md" className="w-full">
-          <TextInput.Control placeholder="Name" {...register('name')} />
+          <TextInput.Control placeholder="Username" {...register('name')} />
         </TextInput.Root>
         {errors.name && (
           <Text className="text-red-500" size="sm">

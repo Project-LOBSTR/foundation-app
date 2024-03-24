@@ -47,3 +47,4 @@ If you would like to help us out, please reach out to one of our contributors:
 [Ben Gunn](https://github.com/bengunn)
 [Matt Wilson](https://github.com/mattwilson02)
 [Ricardo Brito](https://github.com/RicardoBrito1938)
+[Romane Van Broukhoven](https://github.com/Romanevb)
