@@ -59,7 +59,7 @@ const RecoverSeedPhrase = () => {
 
     dispatch(login({ publickey: pubKey, privatekey: recoveredSecret }))
     // TODO: check is user has onboarded
-    router.push(routes.chooseAppMode)
+    router.push(routes.personalDetails)
   }
 
   return (
