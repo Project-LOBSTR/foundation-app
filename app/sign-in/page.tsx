@@ -58,18 +58,12 @@ const SignIn = () => {
         </Heading>
         {/** TODO: fixed width */}
         {!isPWA && (
-          <div
-            className="flex flex-row gap-2 bg-gradient-lobstr p-2 rounded-md w-40"
-            onClick={newLogin}
-          >
-            <FaFileSignature color="#3A167F" />
-            <TextInput.Root
-              className="text-black font-semibold w-full"
-              size="sm"
-            >
-              Use NOSTR signer
-            </TextInput.Root>
-          </div>
+          <Button.Root onClick={newLogin} className="max-w-[200px]">
+            <Button.Prefix>
+              <FaFileSignature />
+            </Button.Prefix>
+            Use NIP07 signer
+          </Button.Root>
         )}
 
         <TextInput.Root size="sm" className="w-full">

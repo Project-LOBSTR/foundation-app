@@ -92,7 +92,7 @@ const SignUp = () => {
       <Layout logoSize={200}>
         <div className="item-center flex flex-col gap-10 align-middle w-full px-10">
           <Heading
-            className=" font-semibold text-center font-heading text-primary-500"
+            className="font-semibold text-center font-heading text-primary-500"
             size="h3"
           >
             Write down your seed phrase somewhere safe
@@ -126,7 +126,9 @@ const SignUp = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex flex-col gap-2 align-middle w-full px-10">
-        <Heading size="h2">Create new account</Heading>
+        <Heading size="h4" className="text-center">
+          Create new account
+        </Heading>
         <TextInput.Root size="md" className="w-full">
           <TextInput.Control placeholder="Username" {...register('name')} />
         </TextInput.Root>
