@@ -91,10 +91,7 @@ const SignUp = () => {
     return (
       <Layout logoSize={200}>
         <div className="item-center flex flex-col gap-10 align-middle w-full px-10">
-          <Heading
-            className="font-semibold text-center font-heading text-primary-500"
-            size="h3"
-          >
+          <Heading className="font-semibold text-center font-heading" size="h3">
             Write down your seed phrase somewhere safe
           </Heading>
 

@@ -22,7 +22,7 @@ const Layout = ({
   }, [router])
 
   return (
-    <main className="flex min-h-screen max-w-2xl w-full h-full flex-col bg-white">
+    <main className="flex max-h-screen max-w-2xl w-full h-full flex-col bg-white">
       {canGoBack && (
         <div className="p-2" onClick={goBack}>
           <IoIosArrowBack className="text-black" />

@@ -6,4 +6,9 @@ export const routes = {
   signIn: '/sign-in',
   signUp: '/sign-up',
   profile: '/profile',
+  scubaOnboarding: '/scuba-onboarding',
+  scubaOnboardingMedicalQuestionnaire:
+    '/scuba-onboarding/medical-questionnaire',
+  scubaOnboardingMedicalQuestionnaireBoxA:
+    '/scuba-onboarding/medical-questionnaire/box-a',
 }

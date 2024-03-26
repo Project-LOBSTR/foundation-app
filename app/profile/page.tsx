@@ -5,6 +5,7 @@ import { Button } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux'
 
+import { routes } from '@/constants/routes'
 import { logout } from '@/redux/features/user'
 import { useAppSelector } from '@/redux/store'
 
@@ -25,6 +26,9 @@ const Profile = () => {
   return (
     <div>
       <h1>Profile</h1>
+      <Button.Root onClick={() => router.push(routes.scubaOnboarding)}>
+        Go to Scuba Onboarding
+      </Button.Root>
       <Button.Root onClick={signOut}>Logout</Button.Root>
     </div>
   )
