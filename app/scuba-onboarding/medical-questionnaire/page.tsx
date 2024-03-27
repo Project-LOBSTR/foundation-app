@@ -38,7 +38,7 @@ const MedicalQuestionnaire = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex overflow-y-scroll py-10 flex-col gap-8 align-middle w-full px-10">
-        <Heading className="font-semibold text-center" size="h5">
+        <Heading className="font-semibold text-center" size="h4">
           Medical Questionnaire
         </Heading>
         <div className="flex flex-row gap-2">

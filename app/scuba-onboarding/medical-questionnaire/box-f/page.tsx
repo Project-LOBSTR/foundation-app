@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Heading, Text } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import Layout from '@/components/Layout'
@@ -23,7 +23,7 @@ type medicalQuestionnaireSchemaBoxF = z.infer<
 
 const BoxF = () => {
   const router = useRouter()
-  const { setValue, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxF>({
+  const { control, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxF>({
     resolver: zodResolver(medicalQuestionnaireSchemaBoxF),
   })
 
@@ -35,93 +35,131 @@ const BoxF = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex overflow-y-scroll py-10 flex-col gap-8 align-middle w-full px-10">
-        <Heading className="font-semibold text-center" size="h5">
-          I have/have had:
+        <Heading className="font-semibold text-center" size="h4">
+          Box F
+        </Heading>
+        <Heading className="subtitle text-left font-semibold" size="h6">
+          I have/I had:
         </Heading>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('1', checked)
+          <Controller
+            control={control}
+            name="1"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Recurrent back problems in the last 6 months that limit my everyday
             activity.
           </Text>
         </div>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('2', checked)
+          <Controller
+            control={control}
+            name="2"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Back or spinal surgery within the last 12 months.
           </Text>
         </div>
 
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('3', checked)
+          <Controller
+            control={control}
+            name="3"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Diabetes, either drug or diet controlled, OR gestational diabetes
             within the last 12 months.
           </Text>
         </div>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('4', checked)
+          <Controller
+            control={control}
+            name="4"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             An uncorrected hernia that limits my physical abilities.
           </Text>
         </div>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('5', checked)
+          <Controller
+            control={control}
+            name="5"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Active or untreated ulcers, problem wounds, or ulcer surgery within
             the last 6 months.

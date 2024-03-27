@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Heading, Text } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import Layout from '@/components/Layout'
@@ -22,7 +22,7 @@ type medicalQuestionnaireSchemaBoxE = z.infer<
 
 const BoxE = () => {
   const router = useRouter()
-  const { setValue, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxE>({
+  const { control, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxE>({
     resolver: zodResolver(medicalQuestionnaireSchemaBoxE),
   })
 
@@ -34,40 +34,57 @@ const BoxE = () => {
   return (
     <Layout logoSize={200}>
       <div className="item-center flex overflow-y-scroll py-10 flex-col gap-8 align-middle w-full px-10">
-        <Heading className="font-semibold text-center" size="h5">
-          I have/have had:
+        <Heading className="font-semibold text-center" size="h4">
+          Box E
+        </Heading>
+        <Heading className="subtitle text-left font-semibold" size="h6">
+          I have/I had:
         </Heading>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('1', checked)
+          <Controller
+            control={control}
+            name="1"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Behavioral health, mental or psychological problems requiring
             medical/psychiatric treatment.
           </Text>
         </div>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('2', checked)
+          <Controller
+            control={control}
+            name="2"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Major depression, suicidal ideation, panic attacks, uncontrolled
             bipolar disorder requiring medication/psychiatric treatment.
@@ -75,18 +92,25 @@ const BoxE = () => {
         </div>
 
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('3', checked)
+          <Controller
+            control={control}
+            name="3"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             Been diagnosed with a mental health condition or a
             learning/developmental disorder that requires ongoing care or
@@ -94,18 +118,25 @@ const BoxE = () => {
           </Text>
         </div>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('4', checked)
+          <Controller
+            control={control}
+            name="4"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
             }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
+          />
           <Text className="max-w-[300px]">
             An addiction to drugs or alcohol requiring treatment within the last
             5 years.
