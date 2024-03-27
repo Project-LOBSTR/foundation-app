@@ -3,43 +3,42 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Heading, Text } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
-import { useForm, Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import Layout from '@/components/Layout'
 import { routes } from '@/constants/routes'
 
-const medicalQuestionnaireSchemaBoxA = z.object({
+const medicalQuestionnaireSchemaBoxB = z.object({
   '1': z.boolean().default(false),
   '2': z.boolean().default(false),
   '3': z.boolean().default(false),
   '4': z.boolean().default(false),
-  '5': z.boolean().default(false),
 })
 
-type MedicalQuestionnaireSchemaBoxA = z.infer<
-  typeof medicalQuestionnaireSchemaBoxA
+type medicalQuestionnaireSchemaBoxB = z.infer<
+  typeof medicalQuestionnaireSchemaBoxB
 >
 
-const BoxA = () => {
+const BoxB = () => {
   const router = useRouter()
-  const { control, handleSubmit } = useForm<MedicalQuestionnaireSchemaBoxA>({
-    resolver: zodResolver(medicalQuestionnaireSchemaBoxA),
+  const { control, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxB>({
+    resolver: zodResolver(medicalQuestionnaireSchemaBoxB),
   })
 
-  const onSubmit = (data: MedicalQuestionnaireSchemaBoxA) => {
+  const onSubmit = (data: medicalQuestionnaireSchemaBoxB) => {
     console.log(data)
-    router.push(routes.scubaOnboardingMedicalQuestionnaireBoxB)
+    router.push(routes.scubaOnboardingMedicalQuestionnaireBoxC)
   }
 
   return (
     <Layout logoSize={200}>
       <div className="item-center flex overflow-y-scroll py-10 flex-col gap-8 align-middle w-full px-10">
         <Heading className="font-semibold text-center" size="h4">
-          Box A
+          Box B
         </Heading>
         <Heading className="subtitle text-left font-semibold" size="h6">
-          I have/I had:
+          I am 45 years of age and:
         </Heading>
         <div className="flex flex-row gap-2">
           <Controller
@@ -62,12 +61,9 @@ const BoxA = () => {
             }}
           />
           <Text className="max-w-[300px]">
-            Chest surgery, heart surgery, heart valve surgery, an implantable
-            medical device (eg, stent, pacemaker, neurostimulator),
-            pneumothorax,and/or chronic lung disease.
+            I currently smoke or inhale nicotine by other means.
           </Text>
         </div>
-
         <div className="flex flex-row gap-2">
           <Controller
             control={control}
@@ -89,8 +85,7 @@ const BoxA = () => {
             }}
           />
           <Text className="max-w-[300px]">
-            Asthma, wheezing, severe allergies, hay fever or congested airways
-            within the last 12 months that limits my physical activity/exercise.
+            I have a high cholesterol level.
           </Text>
         </div>
 
@@ -114,13 +109,8 @@ const BoxA = () => {
               )
             }}
           />
-          <Text className="max-w-[300px]">
-            A problem or illness involving my heart such as: angina, chest pain
-            on exertion, heart failure, immersion pulmonary oedema, heart attack
-            or stroke, OR am taking medication for any heart condition.
-          </Text>
+          <Text className="max-w-[300px]">I have high blood pressure.</Text>
         </div>
-
         <div className="flex flex-row gap-2">
           <Controller
             control={control}
@@ -142,34 +132,10 @@ const BoxA = () => {
             }}
           />
           <Text className="max-w-[300px]">
-            Recurrent bronchitis and currently coughing within the past 12
-            months, OR have been diagnosed with emphysema.
-          </Text>
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <Controller
-            control={control}
-            name="5"
-            rules={{ required: 'This field is required' }}
-            render={({ field }) => {
-              return (
-                <Checkbox.Root
-                  defaultChecked={false}
-                  onCheckedChange={(checked) => {
-                    field.onChange(checked)
-                  }}
-                >
-                  <Checkbox.Indicator>
-                    <Checkbox.Check />
-                  </Checkbox.Indicator>
-                </Checkbox.Root>
-              )
-            }}
-          />
-          <Text className="max-w-[300px]">
-            Symptoms affecting my lungs, breathing, heart and/or blood in the
-            last 30 days that impair my physical or mental performance.
+            I have had a close blood relative die suddenly or of cardiac disease
+            or stroke before the age of 50, OR have a family history of heart
+            disease before age 50 (including abnormal heart rhythms, coronary
+            artery disease or cardiomyopathy).
           </Text>
         </div>
         <Button.Root
@@ -183,4 +149,4 @@ const BoxA = () => {
   )
 }
 
-export default BoxA
+export default BoxB
