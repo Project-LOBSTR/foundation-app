@@ -2,7 +2,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Checkbox, Heading, Text } from '@lobstr/react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import Layout from '@/components/Layout'
@@ -25,9 +25,10 @@ type MedicalQuestionnaireSchema = z.infer<typeof medicalQuestionnaireSchema>
 
 const MedicalQuestionnaire = () => {
   const router = useRouter()
-  const { setValue, handleSubmit } = useForm<MedicalQuestionnaireSchema>({
-    resolver: zodResolver(medicalQuestionnaireSchema),
-  })
+  const { setValue, control, handleSubmit } =
+    useForm<MedicalQuestionnaireSchema>({
+      resolver: zodResolver(medicalQuestionnaireSchema),
+    })
 
   const onSubmit = (data: MedicalQuestionnaireSchema) => {
     console.log(data)
@@ -41,7 +42,26 @@ const MedicalQuestionnaire = () => {
           Medical Questionnaire
         </Heading>
         <div className="flex flex-row gap-2">
-          <Checkbox.Root
+          <Controller
+            control={control}
+            name="1"
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => {
+              return (
+                <Checkbox.Root
+                  defaultChecked={false}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                >
+                  <Checkbox.Indicator>
+                    <Checkbox.Check />
+                  </Checkbox.Indicator>
+                </Checkbox.Root>
+              )
+            }}
+          />
+          {/* <Checkbox.Root
             defaultChecked={false}
             onCheckedChange={(checked) => {
               if (typeof checked !== 'boolean') return false
@@ -52,7 +72,7 @@ const MedicalQuestionnaire = () => {
             <Checkbox.Indicator>
               <Checkbox.Check />
             </Checkbox.Indicator>
-          </Checkbox.Root>
+          </Checkbox.Root> */}
           <Text className="max-w-[300px]">
             I have had problems with my lungs, breathing, heart and/or blood
             affecting my normal physical or mental performance
