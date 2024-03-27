@@ -9,33 +9,33 @@ import { z } from 'zod'
 import Layout from '@/components/Layout'
 import { routes } from '@/constants/routes'
 
-const medicalQuestionnaireSchemaBoxA = z.object({
+const medicalQuestionnaireSchemaBoxE = z.object({
   '1': z.boolean().default(false),
   '2': z.boolean().default(false),
   '3': z.boolean().default(false),
   '4': z.boolean().default(false),
-  '5': z.boolean().default(false),
 })
 
-type MedicalQuestionnaireSchemaBoxA = z.infer<
-  typeof medicalQuestionnaireSchemaBoxA
+type medicalQuestionnaireSchemaBoxE = z.infer<
+  typeof medicalQuestionnaireSchemaBoxE
 >
 
-const BoxA = () => {
+const BoxE = () => {
   const router = useRouter()
-  const { setValue, handleSubmit } = useForm<MedicalQuestionnaireSchemaBoxA>({
-    resolver: zodResolver(medicalQuestionnaireSchemaBoxA),
+  const { setValue, handleSubmit } = useForm<medicalQuestionnaireSchemaBoxE>({
+    resolver: zodResolver(medicalQuestionnaireSchemaBoxE),
   })
 
-  const onSubmit = (data: MedicalQuestionnaireSchemaBoxA) => {
+  const onSubmit = (data: medicalQuestionnaireSchemaBoxE) => {
     console.log(data)
-    router.push(routes.scubaOnboardingMedicalQuestionnaireBoxB)
+    router.push(routes.scubaOnboardingMedicalQuestionnaireBoxF)
   }
+
   return (
     <Layout logoSize={200}>
       <div className="item-center flex overflow-y-scroll py-10 flex-col gap-8 align-middle w-full px-10">
         <Heading className="font-semibold text-center" size="h5">
-          I have/had:
+          I have/have had:
         </Heading>
         <div className="flex flex-row gap-2">
           <Checkbox.Root
@@ -51,12 +51,10 @@ const BoxA = () => {
             </Checkbox.Indicator>
           </Checkbox.Root>
           <Text className="max-w-[300px]">
-            Chest surgery, heart surgery, heart valve surgery, an implantable
-            medical device (eg, stent, pacemaker, neurostimulator),
-            pneumothorax,and/or chronic lung disease.
+            Behavioral health, mental or psychological problems requiring
+            medical/psychiatric treatment.
           </Text>
         </div>
-
         <div className="flex flex-row gap-2">
           <Checkbox.Root
             defaultChecked={false}
@@ -71,8 +69,8 @@ const BoxA = () => {
             </Checkbox.Indicator>
           </Checkbox.Root>
           <Text className="max-w-[300px]">
-            Asthma, wheezing, severe allergies, hay fever or congested airways
-            within the last 12 months that limits my physical activity/exercise.
+            Major depression, suicidal ideation, panic attacks, uncontrolled
+            bipolar disorder requiring medication/psychiatric treatment.
           </Text>
         </div>
 
@@ -90,12 +88,11 @@ const BoxA = () => {
             </Checkbox.Indicator>
           </Checkbox.Root>
           <Text className="max-w-[300px]">
-            A problem or illness involving my heart such as: angina, chest pain
-            on exertion, heart failure, immersion pulmonary oedema, heart attack
-            or stroke, OR am taking medication for any heart condition.
+            Been diagnosed with a mental health condition or a
+            learning/developmental disorder that requires ongoing care or
+            special accommodation.
           </Text>
         </div>
-
         <div className="flex flex-row gap-2">
           <Checkbox.Root
             defaultChecked={false}
@@ -110,27 +107,8 @@ const BoxA = () => {
             </Checkbox.Indicator>
           </Checkbox.Root>
           <Text className="max-w-[300px]">
-            Recurrent bronchitis and currently coughing within the past 12
-            months, OR have been diagnosed with emphysema.
-          </Text>
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <Checkbox.Root
-            defaultChecked={false}
-            onCheckedChange={(checked) => {
-              if (typeof checked !== 'boolean') return false
-
-              setValue('5', checked)
-            }}
-          >
-            <Checkbox.Indicator>
-              <Checkbox.Check />
-            </Checkbox.Indicator>
-          </Checkbox.Root>
-          <Text className="max-w-[300px]">
-            Symptoms affecting my lungs, breathing, heart and/or blood in the
-            last 30 days that impair my physical or mental performance.
+            An addiction to drugs or alcohol requiring treatment within the last
+            5 years.
           </Text>
         </div>
         <Button.Root
@@ -144,4 +122,4 @@ const BoxA = () => {
   )
 }
 
-export default BoxA
+export default BoxE

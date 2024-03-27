@@ -217,7 +217,7 @@ const MedicalQuestionnaire = () => {
           </Checkbox.Root>
           <Text className="max-w-[300px]">
             I am taking prescription medications (with the exception of birth
-            control or anti-malarial drugs other than mefloquine (Lariam).
+            control or anti-malarial drugs other than mefloquine (Lariam)).
           </Text>
         </div>
         <Button.Root
