@@ -86,6 +86,7 @@ const PersonalDetails = () => {
         </Heading>
         <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
+            data-cy="first-name-input"
             placeholder="First Name"
             {...register('firstName')}
           />
@@ -98,6 +99,7 @@ const PersonalDetails = () => {
 
         <TextInput.Root size="sm" className="w-full">
           <TextInput.Control
+            data-cy="last-name-input"
             placeholder="Last Name"
             {...register('lastName')}
           />
@@ -109,6 +111,7 @@ const PersonalDetails = () => {
         )}
 
         <Button.Root
+          data-cy="personal-details-continue-button"
           className="w-full justify-center"
           size="md"
           variant="primary"
