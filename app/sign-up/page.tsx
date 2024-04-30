@@ -21,7 +21,6 @@ import { login } from '@/redux/features/user'
 const signUpSchema = z
   .object({
     name: z.string().min(1),
-    email: z.string().email(),
   })
   .required()
 
@@ -68,7 +67,6 @@ const SignUp = () => {
         created_at: Math.floor(new Date().getTime() / 1000),
         content: JSON.stringify({
           name: data.name,
-          nip05: data.email,
         }),
         pubkey: pubKey,
         tags: [],
@@ -109,6 +107,7 @@ const SignUp = () => {
             })}
           </div>
           <Button.Root
+            data-cy="seed-phrase-continue-button"
             className="w-full justify-center"
             size="md"
             variant="primary"
@@ -127,25 +126,19 @@ const SignUp = () => {
           Create new account
         </Heading>
         <TextInput.Root size="md" className="w-full">
-          <TextInput.Control placeholder="Username" {...register('name')} />
+          <TextInput.Control
+            data-cy="username-input"
+            placeholder="Username"
+            {...register('name')}
+          />
         </TextInput.Root>
         {errors.name && (
           <Text className="text-red-500" size="sm">
             {errors.name.message}
           </Text>
         )}
-        <TextInput.Root size="md" className="w-full">
-          <TextInput.Control
-            placeholder="Email address"
-            {...register('email')}
-          />
-        </TextInput.Root>
-        {errors.email && (
-          <Text className="text-red-500" size="sm">
-            {errors.email.message}
-          </Text>
-        )}
         <Button.Root
+          data-cy="create-nostr-account-button"
           className="w-full justify-center"
           size="md"
           variant="primary"

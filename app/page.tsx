@@ -52,6 +52,7 @@ export default function Home() {
         <div className="flex w-full flex-col gap-2">
           {buttons.map(({ id, buttonText, onClick }) => (
             <Button.Root
+              data-cy={`${id}-button`}
               key={id}
               className="w-full justify-center"
               variant="primary"
